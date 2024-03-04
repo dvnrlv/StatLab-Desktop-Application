@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        stylesheets="@style.css"
+        fx:id="registerPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.ia_fxgui.SceneController" prefWidth="400" prefHeight="300">
+
+    <center>
+        <TabPane>
+            <tabs>
+
+                <Tab text="Register">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER">
+                            <Label text="Create an Account" styleClass="form-label"/>
+
+                            <TextField fx:id="registerUsernameField" promptText="Username" styleClass="text-field"/>
+                            <PasswordField fx:id="registerPasswordField" promptText="Password" styleClass="text-field"/>
+
+                            <Button text="Register" onAction="#handleRegistration" styleClass="action-button"/>
+
+                            <Hyperlink text="Back to Login" onAction="#showLoginScreen"/>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+
+    <!-- Footer -->
+    <bottom>
+        <HBox alignment="CENTER">
+            <Label text="Your App © 2024" styleClass="footer-label"/>
+        </HBox>
+    </bottom>
+</BorderPane>
