@@ -1,10 +1,8 @@
 package com.example.ia_fxgui.login;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
+// Rewrite everything on interfaces
 
 public class UserManager {
     private static final String DATABASE_URL = "jdbc:sqlite:users.db";

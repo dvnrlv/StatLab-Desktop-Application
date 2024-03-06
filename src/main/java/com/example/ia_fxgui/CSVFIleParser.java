@@ -1,12 +1,12 @@
 package com.example.ia_fxgui;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import java.io.BufferedReader;
 
-
+// GPT generated. Check & fix
 public class CSVFIleParser {
 
     public static ArrayList<ArrayList<Integer>> parseCSV(String fileName) {
@@ -49,7 +49,7 @@ public class CSVFIleParser {
                 data.add(row);
             }
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Incorrect file: "+ e.getMessage());
+            System.out.println("Incorrect file: " + e.getMessage());
             e.printStackTrace();
             return null;
 

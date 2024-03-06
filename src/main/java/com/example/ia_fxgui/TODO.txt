@@ -1,0 +1,3 @@
+- Rewrite everything on interfaces
+- Separate database from logic
+- Check gpt generated files
