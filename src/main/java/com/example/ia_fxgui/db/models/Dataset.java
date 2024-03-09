@@ -5,11 +5,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Getter
 @Setter
 public class Dataset {
     private String name;
-    private ArrayList<Point> points;
+    private List<Point> points;
+
+    public Dataset(String name) {
+        this.name = name;
+        points = new ArrayList<>();
+    }
 }
