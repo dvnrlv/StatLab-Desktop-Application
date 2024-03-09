@@ -1,6 +1,7 @@
 package com.example.ia_fxgui.db.services;
 
 import com.example.ia_fxgui.db.DBManager;
+import com.example.ia_fxgui.db.SqlRowNotFoundException;
 import com.example.ia_fxgui.db.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,8 +38,7 @@ public class UserServiceRawSqlite implements UserService {
 
     @Override
     public boolean register(String login, String password) {
-        User userByLogin = findByLogin(login);
-        if (userByLogin != null) {
+        if (checkIfUserWithLoginExists(login)) {
             return false;
         }
 
@@ -48,18 +48,34 @@ public class UserServiceRawSqlite implements UserService {
 
     @Override
     public boolean login(String login, String password) {
-        User userByLogin = findByLogin(login);
-        return userByLogin != null && encoder.matches(password, userByLogin.getPassword());
+        User userByLogin;
+        try {
+            userByLogin = findByLogin(login);
+        } catch (SqlRowNotFoundException e) {
+            return false;
+        }
+
+        return encoder.matches(password, userByLogin.getPassword());
     }
 
     @Override
-    public User findByLogin(String login) {
+    public User findByLogin(String login) throws SqlRowNotFoundException {
         String statement = String.format(SELECT_STATEMENT, login);
         try (ResultSet results = DBManager.executeQuery(statement)) {
             if (!results.next()) {
-                return null;
+                throw new SqlRowNotFoundException("No user with provided login");
             }
             return new User(results.getString("name"), results.getString("password"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkIfUserWithLoginExists(String login) {
+        String statement = String.format(SELECT_STATEMENT, login);
+        try (ResultSet results = DBManager.executeQuery(statement)) {
+            return results.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
