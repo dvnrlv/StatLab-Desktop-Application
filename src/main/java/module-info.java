@@ -8,6 +8,7 @@ module com.example.ia_fxgui {
     requires java.sql;
     requires commons.csv;
     requires lombok;
+    requires spring.security.crypto;
 
     opens com.example.ia_fxgui to javafx.fxml;
     exports com.example.ia_fxgui;

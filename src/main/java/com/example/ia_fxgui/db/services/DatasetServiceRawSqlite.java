@@ -21,9 +21,15 @@ public class DatasetServiceRawSqlite implements DatasetService {
     }
 
     @Override
-    public void saveDataset(Dataset dataset) {
+    public void saveExistingDataset(Dataset dataset) {
 
     }
+
+    @Override
+    public void saveNewDataset(Dataset dataset) {
+
+    }
+
 
     @Override
     public Dataset findDatasetByName() {

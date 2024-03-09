@@ -7,10 +7,7 @@ import com.example.ia_fxgui.db.services.UserService;
 import com.example.ia_fxgui.db.services.UserServiceRawSqlite;
 import lombok.Getter;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DBManager {
     private static final String DATABASE_URL = "jdbc:sqlite:ia_fxgui.db";
@@ -53,6 +50,15 @@ public class DBManager {
         try (Connection connection = DBManager.getConnection();
              Statement dbStatement = connection.createStatement()) {
             dbStatement.execute(statement);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ResultSet executeQuery(String statement) {
+        try (Connection connection = DBManager.getConnection();
+             Statement dbStatement = connection.createStatement()) {
+            return dbStatement.executeQuery(statement);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
