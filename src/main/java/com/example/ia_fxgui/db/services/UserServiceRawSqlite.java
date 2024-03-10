@@ -1,10 +1,9 @@
 package com.example.ia_fxgui.db.services;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.SqlRowNotFoundException;
 import com.example.ia_fxgui.db.models.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,17 +22,15 @@ public class UserServiceRawSqlite implements UserService {
     private static final String SELECT_STATEMENT = String.format(
             "SELECT * from %s",
             TABLE_NAME
-    ) + " WHERE login=%s";
+    ) + " WHERE login='%s'";
 
     private static final String INSERT_STATEMENT_PATTERN = String.format(
             "INSERT INTO %s",
             TABLE_NAME
     ) + " values (%s)";
-    private final PasswordEncoder encoder;
 
     public UserServiceRawSqlite() {
         DBManager.executeStatement(CREATION_STATEMENT);
-        encoder = new BCryptPasswordEncoder();
     }
 
     @Override
@@ -42,7 +39,7 @@ public class UserServiceRawSqlite implements UserService {
             return false;
         }
 
-        saveNewUser(new User(login, encoder.encode(password)));
+        saveNewUser(new User(login, BCrypt.withDefaults().hashToString(12, password.toCharArray())));
         return true;
     }
 
@@ -55,7 +52,7 @@ public class UserServiceRawSqlite implements UserService {
             return false;
         }
 
-        return encoder.matches(password, userByLogin.getPassword());
+        return BCrypt.verifyer().verify(password.toCharArray(), userByLogin.getPassword()).verified;
     }
 
     @Override

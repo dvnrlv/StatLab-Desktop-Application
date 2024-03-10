@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="users" uuid="9c5f7bd7-bbde-4905-a927-a1d0383b094c">
+    <data-source source="LOCAL" name="ia_fxgui" uuid="362f2cc2-07f8-4769-8adf-7ddbd75fa55e">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Kirill\Projects\Java\IA_fxGUI\users.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\Kirill\Projects\Java\IA_fxGUI\ia_fxgui.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

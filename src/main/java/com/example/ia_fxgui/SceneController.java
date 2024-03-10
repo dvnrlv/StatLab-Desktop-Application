@@ -1,9 +1,7 @@
 package com.example.ia_fxgui;
 
-import com.example.ia_fxgui.login.SQLiteDataBaseController;
-import com.example.ia_fxgui.login.UserManager;
+import com.example.ia_fxgui.db.DBManager;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -53,7 +51,7 @@ public class SceneController {
 
 
     public void initialize() {
-        SQLiteDataBaseController.initializeDatabase();
+        DBManager.getInstance();
     }
 
     @FXML
@@ -61,7 +59,7 @@ public class SceneController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (UserManager.loginUser(username, password)) {
+        if (DBManager.getInstance().getUserService().login(username, password)) {
             // Successful login, navigate to the main application screen
             // You can replace this with your application logic.
             System.out.println("Login Successful");
@@ -90,7 +88,7 @@ public class SceneController {
         String username = registerUsernameField.getText();
         String password = registerPasswordField.getText();
 
-        UserManager.registerUser(username, password);
+        DBManager.getInstance().getUserService().register(username, password);
 
         // After successful registration, you can navigate back to the login screen
         showLoginScreen(event);

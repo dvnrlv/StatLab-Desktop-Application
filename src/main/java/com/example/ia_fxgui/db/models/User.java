@@ -10,6 +10,6 @@ public class User {
     private String password;
 
     public String toDbRaw() {
-        return login + ", " + password;
+        return "'" + login + "', '" + password + "'";
     }
 }
