@@ -9,14 +9,13 @@ import lombok.Getter;
 
 import java.sql.*;
 
+@Getter
 public class DBManager {
     private static final String DATABASE_URL = "jdbc:sqlite:ia_fxgui.db";
 
     private static volatile DBManager instance;
 
-    @Getter
     private final DatasetService datasetService;
-    @Getter
     private final UserService userService;
 
     public DBManager() {

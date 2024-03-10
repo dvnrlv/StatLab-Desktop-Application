@@ -7,7 +7,7 @@ module com.example.ia_fxgui {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires commons.csv;
-    requires lombok;
+    requires static lombok;
     requires spring.security.crypto;
 
     opens com.example.ia_fxgui to javafx.fxml;
