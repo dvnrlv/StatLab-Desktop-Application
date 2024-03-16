@@ -44,22 +44,4 @@ public class DBManager {
             throw new RuntimeException(e);
         }
     }
-
-    public static void executeStatement(String statement) {
-        try (Connection connection = DBManager.getConnection();
-             Statement dbStatement = connection.createStatement()) {
-            dbStatement.execute(statement);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static ResultSet executeQuery(String statement) {
-        try (Connection connection = DBManager.getConnection();
-             Statement dbStatement = connection.createStatement()) {
-            return dbStatement.executeQuery(statement);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

@@ -5,32 +5,21 @@ import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.SqlRowNotFoundException;
 import com.example.ia_fxgui.db.models.User;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class UserServiceRawSqlite implements UserService {
-    private static final String TABLE_NAME = "users";
-    private static final String CREATION_STATEMENT = String.format(
-            "CREATE TABLE IF NOT EXISTS %s(" +
-                    "    login TEXT PRIMARY KEY," +
-                    "    password TEXT" +
-                    ")",
-            TABLE_NAME
-    );
-
-    private static final String SELECT_STATEMENT = String.format(
-            "SELECT * from %s",
-            TABLE_NAME
-    ) + " WHERE login='%s'";
-
-    private static final String INSERT_STATEMENT_PATTERN = String.format(
-            "INSERT INTO %s",
-            TABLE_NAME
-    ) + " values (%s)";
 
     public UserServiceRawSqlite() {
-        DBManager.executeStatement(CREATION_STATEMENT);
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute("CREATE TABLE IF NOT EXISTS users(" +
+                    "                       login TEXT PRIMARY KEY," +
+                    "                       password TEXT" +
+                    "                    )");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -57,12 +46,18 @@ public class UserServiceRawSqlite implements UserService {
 
     @Override
     public User findByLogin(String login) throws SqlRowNotFoundException {
-        String statement = String.format(SELECT_STATEMENT, login);
-        try (ResultSet results = DBManager.executeQuery(statement)) {
-            if (!results.next()) {
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE login=?");
+        ) {
+            statement.setString(0, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
                 throw new SqlRowNotFoundException("No user with provided login");
             }
-            return new User(results.getString("name"), results.getString("password"));
+
+            User user = new User(resultSet.getString("login"), resultSet.getString("password"));
+            resultSet.close();
+            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,15 +65,26 @@ public class UserServiceRawSqlite implements UserService {
 
     @Override
     public boolean checkIfUserWithLoginExists(String login) {
-        String statement = String.format(SELECT_STATEMENT, login);
-        try (ResultSet results = DBManager.executeQuery(statement)) {
-            return results.next();
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE login=?");
+        ) {
+            statement.setString(0, login);
+            ResultSet resultSet = statement.executeQuery();
+            boolean doesExist = resultSet.next();
+            resultSet.close();
+            return doesExist;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private static void saveNewUser(User user) {
-        DBManager.executeStatement(String.format(INSERT_STATEMENT_PATTERN, user.toDbRaw()));
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO users values (?, ?)")) {
+            statement.setString(0, user.getLogin());
+            statement.setString(1, user.getPassword());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
