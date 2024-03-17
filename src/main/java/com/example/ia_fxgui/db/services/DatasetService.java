@@ -4,8 +4,7 @@ import com.example.ia_fxgui.db.SqlRowNotFoundException;
 import com.example.ia_fxgui.db.models.Dataset;
 
 public interface DatasetService {
-    void saveExistingDataset(Dataset dataset) throws SqlRowNotFoundException;
-    void saveNewDataset(Dataset dataset);
+    void saveDataset(Dataset dataset);
 
     Dataset findDatasetByName(String name) throws SqlRowNotFoundException;
 

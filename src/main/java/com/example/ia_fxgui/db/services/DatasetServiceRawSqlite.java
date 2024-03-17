@@ -5,60 +5,57 @@ import com.example.ia_fxgui.db.SqlRowNotFoundException;
 import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.db.models.Point;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatasetServiceRawSqlite implements DatasetService {
-    private static final String TABLE_NAME = "datasets";
-    private static final String CREATION_STATEMENT = String.format(
-            "CREATE TABLE IF NOT EXISTS %s" +
+    private static final String POINT_TABLE_CREATION_STATEMENT =
+            ;
+
+    public DatasetServiceRawSqlite() {
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute("CREATE TABLE IF NOT EXISTS datasets" +
                     "(" +
                     "    name PRIMARY KEY" +
-                    ");",
-            TABLE_NAME
-    );
+                    ");");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-    private static final String POINT_TABLE_CREATION_STATEMENT =
-            "CREATE TABLE IF NOT EXISTS %s" +
+    @Override
+    public void saveDataset(Dataset dataset) {
+        DBManager.executeStatement(String.format(POINT_TABLE_DELETE_STATEMENT, dataset.getName()));
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT OR IGNORE INTO datasets values (?)")) {
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        savePoints(dataset);
+    }
+
+    private static void savePoints(Dataset dataset) {
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute(String.format("CREATE TABLE IF NOT EXISTS %s" +
                     "(" +
                     "    x INTEGER PRIMARY KEY," +
                     "    y INTEGER" +
-                    ");";
+                    ");", dataset.getName()));
 
-    private static final String POINT_TABLE_INSERTION_STATEMENT =
-            "INSERT INTO %s values %s";
-
-    private static final String POINT_TABLE_DELETE_STATEMENT =
-            "DELETE FROM %s";
-    private static final String SELECT_POINTS_STATEMENT = "SELECT * from %s";
-    private static final String SELECT_NAME_STATEMENT = String.format("SELECT * from %s", TABLE_NAME) + " WHERE name=%s";
-    private static final String INSERT_NAME_STATEMENT = String.format("INSERT INTO %s", TABLE_NAME) + " values(%s)";
-
-
-    public DatasetServiceRawSqlite() {
-        DBManager.executeStatement(CREATION_STATEMENT);
-    }
-
-    @Override
-    public void saveExistingDataset(Dataset dataset) throws SqlRowNotFoundException {
-        if (checkIfDatasetWithNameExist(dataset.getName())) {
-            throw new SqlRowNotFoundException("Dataset with provided name not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        DBManager.executeStatement(String.format(POINT_TABLE_DELETE_STATEMENT, dataset.getName()));
-        savePoints(dataset);
-    }
-
-    @Override
-    public void saveNewDataset(Dataset dataset) {
-        DBManager.executeStatement(String.format(INSERT_NAME_STATEMENT, dataset.getName()));
-        savePoints(dataset);
-    }
-
-    private void savePoints(Dataset dataset) {
-        DBManager.executeStatement(String.format(POINT_TABLE_CREATION_STATEMENT, dataset.getName()));
         String values = createRawDbValuesList(dataset);
-        DBManager.executeStatement(String.format(POINT_TABLE_INSERTION_STATEMENT, dataset.getName(), values));
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute(String.format("INSERT into %s values (%s)", dataset.getName(), values));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static String createRawDbValuesList(Dataset dataset) {
@@ -84,15 +81,11 @@ public class DatasetServiceRawSqlite implements DatasetService {
         }
 
         Dataset dataset = new Dataset(name);
-        try (ResultSet resultSet = DBManager.executeQuery(String.format(SELECT_POINTS_STATEMENT, name))) {
-            while (resultSet.next()) {
-                dataset.getPoints().add(
-                        new Point(
-                                resultSet.getLong("x"),
-                                resultSet.getLong("y")
-                        )
-                );
-            }
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT * from %s", name));
+            parseDatasetFromResultSet(resultSet, dataset);
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -100,10 +93,27 @@ public class DatasetServiceRawSqlite implements DatasetService {
         return dataset;
     }
 
+    private static void parseDatasetFromResultSet(ResultSet resultSet, Dataset dataset) throws SQLException {
+        while (resultSet.next()) {
+            dataset.getPoints().add(
+                    new Point(
+                            resultSet.getLong("x"),
+                            resultSet.getLong("y")
+                    )
+            );
+        }
+    }
+
     @Override
     public boolean checkIfDatasetWithNameExist(String name) {
-        try (ResultSet resultSet = DBManager.executeQuery(String.format(SELECT_NAME_STATEMENT, name))) {
-            return resultSet.next();
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM datasets WHERE name=?");
+        ) {
+            statement.setString(0, name);
+            ResultSet resultSet = statement.executeQuery();
+            boolean doesExist = resultSet.next();
+            resultSet.close();
+            return doesExist;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
