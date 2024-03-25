@@ -1,12 +1,14 @@
 package com.example.ia_fxgui;
 
 import com.example.ia_fxgui.db.DBManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -39,19 +41,26 @@ public class SceneController {
     @FXML
     private PasswordField registerPasswordField;
 
+    @FXML
+    private Button popupButton;
+
+    @FXML
+    private AnchorPane scenePane;
+
+    @FXML
+    private void initialize() {
+        DBManager.getInstance();
+        popupButton.setOnAction(e -> PopupManager.getInstance().openPopup("Custom Text for Popup"));
+    }
+
 
     public void switchToSceneMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("main-menu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-    }
-
-
-    public void initialize() {
-        DBManager.getInstance();
     }
 
     @FXML
@@ -69,7 +78,7 @@ public class SceneController {
         }
     }
 
-
+    @FXML
     public void showRegisterScreen(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("RegisterScene.fxml"));
@@ -94,6 +103,7 @@ public class SceneController {
         showLoginScreen(event);
     }
 
+    @FXML
     public void showLoginScreen(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("LoginScene.fxml"));
@@ -107,15 +117,55 @@ public class SceneController {
         }
     }
 
-    @FXML
-    private AnchorPane scenePane;
+    private static Stage currentStage;
+    private static Scene currentScene;
 
+    // Setter methods to set the current Stage and Scene
+    public static void setCurrentStage(Stage stage) {
+        currentStage = stage;
+    }
+
+    public static void setCurrentScene(Scene scene) {
+        currentScene = scene;
+    }
+
+    public static void closeCurrentStage() {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+    }
+
+    // Method to close the current Scene
+    public static void closeCurrentScene() {
+        if (currentScene != null && currentStage != null) {
+            currentStage.setScene(null);
+        }
+    }
+
+    @FXML
     public void userLogout(ActionEvent event) {
 
         stage = (Stage) scenePane.getScene().getWindow();
         System.out.println("You successfully logged out");
         stage.close();
     }
+
+
+    @FXML
+    public static void exitApplication(ActionEvent event){
+        Platform.exit();
+    }
+
+    public static void exitApplication() {
+        Platform.exit();
+    }
+
+
+
+    // Method to exit the application
+
+
+
 
 
 }

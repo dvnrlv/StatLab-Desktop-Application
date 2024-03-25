@@ -1,6 +1,7 @@
 package com.example.ia_fxgui;
 
 
+import com.example.ia_fxgui.services.CSVFileParser;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -46,9 +47,9 @@ public class CSVFileUpload extends Application {
 
                     System.out.println(selectedFile.getPath());
 
-                    System.out.println(CSVFIleParser.parseCSV(selectedFile.getPath()));
+                    System.out.println(CSVFileParser.parseCSV(selectedFile.getPath()));
 
-                    if (CSVFIleParser.parseCSV(selectedFile.getPath()) != null) {
+                    if (CSVFileParser.parseCSV(selectedFile.getPath()) != null) {
                         openNextWindow();
                     } else {
                         statusLabel.setText("Incorrect file type. Refer to manual for formatting");

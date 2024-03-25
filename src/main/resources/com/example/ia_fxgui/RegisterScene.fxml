@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane
-        stylesheets="@style.css"
+        stylesheets="@sceneStyle.css"
         fx:id="registerPane"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"

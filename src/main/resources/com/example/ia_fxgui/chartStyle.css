@@ -1,0 +1,32 @@
+#dataSeries > .chart-line-symbol {
+    -fx-background-color: #ff0000; /* Customize points color = red*/
+    -fx-background-radius: 5px; /* Make points round */
+}
+
+#dataSeries > .chart-series-line {
+    -fx-stroke: transparent; /* Hide line */
+}
+
+#modelSeries > .chart-line-symbol {
+    -fx-background-color: transparent; /* Hide points  */
+}
+
+#modelSeries > .chart-series-line {
+    -fx-stroke: #0000ff; /* Customize line color = blue */
+    -fx-stroke-width: 2px; /* Customize line width for series1 */
+}
+
+
+#bestFitSeries > .chart-line-symbol {
+    -fx-background-color: transparent; /* Hide points for series1 */
+}
+
+#bestFitSeries > .chart-series-line {
+    -fx-stroke: #ffA500; /* Customize line = orange */
+    -fx-stroke-width: 2px; /* Customize line width for series1 */
+}
+
+
+
+
+

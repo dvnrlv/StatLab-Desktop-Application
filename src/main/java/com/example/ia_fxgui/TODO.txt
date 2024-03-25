@@ -1,3 +1,19 @@
 - Rewrite everything on interfaces
 - Separate database from logic
 - Check gpt generated files
+
+- link "enter" to login
+
+
+
+- build main scene
+
+- talk to kirill about DB scene
+
+Questions:
+- In PDFCreator: If I mutate one resultStatArray, will it affect the other?
+
+
+
+
+

@@ -5,7 +5,7 @@
 
 
 <BorderPane
-        stylesheets="@style.css"
+        stylesheets="@sceneStyle.css"
         fx:id="loginPane"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
