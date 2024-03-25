@@ -1,5 +1,6 @@
 package com.example.ia_fxgui.db.models;
 
+import com.example.ia_fxgui.db.DBManager;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,12 @@ public class Dataset {
     public Dataset(String name, String owner) {
         this.name = name;
         this.owner = owner;
+        points = new ArrayList<>();
+    }
+
+    public Dataset(String name) {
+        this.name = name;
+        this.owner = DBManager.getInstance().getAuthService().getLoggedUser();
         points = new ArrayList<>();
     }
 }
