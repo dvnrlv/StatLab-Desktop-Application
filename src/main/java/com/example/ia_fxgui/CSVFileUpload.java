@@ -1,6 +1,9 @@
 package com.example.ia_fxgui;
 
 
+import com.example.ia_fxgui.db.DBManager;
+import com.example.ia_fxgui.db.models.Dataset;
+import com.example.ia_fxgui.db.models.Point;
 import com.example.ia_fxgui.services.CSVFileParser;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -50,6 +53,13 @@ public class CSVFileUpload extends Application {
 
                     try {
                         Double[][] dataSet = CSVFileParser.parseCSV(selectedFile.getPath());
+
+
+                        Dataset dataset = new Dataset(fileName);
+                        for (int i = 0; i < dataSet.length; i++) {
+                            dataset.getPoints().add(new Point(dataSet[i][0], dataSet[i][1]));
+                        }
+                        DBManager.getInstance().getDatasetService().saveDataset(dataset); //saving dataSet to DB
 
 
                         // Print the contents of the array in a double[][] format
