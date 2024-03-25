@@ -1,13 +1,12 @@
 package com.example.ia_fxgui.db;
 
 
-import com.example.ia_fxgui.db.services.DatasetService;
-import com.example.ia_fxgui.db.services.DatasetServiceRawSqlite;
-import com.example.ia_fxgui.db.services.UserService;
-import com.example.ia_fxgui.db.services.UserServiceRawSqlite;
+import com.example.ia_fxgui.db.services.*;
 import lombok.Getter;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Getter
 public class DBManager {
@@ -17,10 +16,12 @@ public class DBManager {
 
     private final DatasetService datasetService;
     private final UserService userService;
+    private final AuthService authService;
 
     public DBManager() {
         userService = new UserServiceRawSqlite();
         datasetService = new DatasetServiceRawSqlite();
+        authService = new AuthServiceImpl();
     }
 
     public static DBManager getInstance() {

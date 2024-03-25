@@ -12,10 +12,12 @@ import java.util.List;
 @Setter
 public class Dataset {
     private String name;
+    private String owner;
     private List<Point> points;
 
-    public Dataset(String name) {
+    public Dataset(String name, String owner) {
         this.name = name;
+        this.owner = owner;
         points = new ArrayList<>();
     }
 }
