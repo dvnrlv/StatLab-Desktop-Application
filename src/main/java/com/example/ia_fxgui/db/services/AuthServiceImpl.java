@@ -30,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String getLoggedUser() {
+    public String getLoggedUserName() {
         return loggedUser;
     }
 }
