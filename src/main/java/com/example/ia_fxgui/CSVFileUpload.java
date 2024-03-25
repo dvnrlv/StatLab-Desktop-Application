@@ -14,6 +14,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class CSVFileUpload extends Application {
@@ -47,12 +48,42 @@ public class CSVFileUpload extends Application {
 
                     System.out.println(selectedFile.getPath());
 
-                    System.out.println(CSVFileParser.parseCSV(selectedFile.getPath()));
+                    try {
+                        Double[][] dataSet = CSVFileParser.parseCSV(selectedFile.getPath());
 
-                    if (CSVFileParser.parseCSV(selectedFile.getPath()) != null) {
-                        openNextWindow();
-                    } else {
-                        statusLabel.setText("Incorrect file type. Refer to manual for formatting");
+
+                        // Print the contents of the array in a double[][] format
+                        System.out.print("[");
+                        for (int i = 0; i < dataSet.length; i++) {
+                            System.out.print("[");
+                            for (int j = 0; j < dataSet[i].length; j++) {
+                                System.out.print(dataSet[i][j]);
+                                if (j < dataSet[i].length - 1) {
+                                    System.out.print(", ");
+                                }
+                            }
+                            System.out.print("]");
+                            if (i < dataSet.length - 1) {
+                                System.out.print(", ");
+                            }
+                        }
+                        System.out.println("]");
+
+                    } catch (IOException | IllegalArgumentException f) {
+                        f.printStackTrace();
+                    }
+
+
+
+
+                    try {
+                        if (CSVFileParser.parseCSV(selectedFile.getPath()) != null) {
+                            openNextWindow();
+                        } else {
+                            statusLabel.setText("Incorrect file type. Refer to manual for formatting");
+                        }
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
                 } else {
                     statusLabel.setText("Incorrect file type. Please select a CSV file.");

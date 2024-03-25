@@ -50,6 +50,7 @@ public class SceneController {
     @FXML
     private void initialize() {
         DBManager.getInstance();
+        popupButton = new Button();
         popupButton.setOnAction(e -> PopupManager.getInstance().openPopup("Custom Text for Popup"));
     }
 
