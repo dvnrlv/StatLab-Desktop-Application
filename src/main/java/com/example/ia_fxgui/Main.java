@@ -36,6 +36,8 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInScene.fxml"));
             primaryStage.setScene(new Scene(loader.load()));
             primaryStage.setTitle("Login and Registration");
+            //primaryStage.setMaximized(true);
+            primaryStage.setFullScreen(!primaryStage.isFullScreen());
             primaryStage.show();
 
         } catch (Exception e) {

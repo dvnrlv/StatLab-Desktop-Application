@@ -60,7 +60,7 @@ public class SceneController {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMaximized(true);
+        stage.setFullScreen(!stage.isFullScreen());
         stage.show();
     }
 
@@ -76,6 +76,7 @@ public class SceneController {
         } else {
             // Display an error message or handle unsuccessful login
             System.out.println("Login Failed");
+            PopupManager.getInstance().openPopup("Login Failed");
         }
     }
 
@@ -86,7 +87,7 @@ public class SceneController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setMaximized(true);
+            stage.setFullScreen(!stage.isFullScreen());
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +112,7 @@ public class SceneController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setMaximized(true);
+            stage.setFullScreen(!stage.isFullScreen());
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
