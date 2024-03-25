@@ -53,15 +53,24 @@ public class DatasetServiceRawSqlite implements DatasetService {
     }
 
     private static void savePoints(Dataset dataset) {
+        dropPointsTable(dataset);
+        createPointsTable(dataset);
+        insertPointsIntoTable(dataset);
+    }
+
+    private static void insertPointsIntoTable(Dataset dataset) {
+        String values = createRawDbValuesList(dataset);
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
-            String statementText = String.format("DROP TABLE %s;", dataset.getName());
+            String statementText = String.format("INSERT into %s values %s", dataset.getName(), values);
             statement.execute(statementText);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
+    private static void createPointsTable(Dataset dataset) {
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
             String statementText = String.format("CREATE TABLE IF NOT EXISTS %s" +
@@ -73,13 +82,13 @@ public class DatasetServiceRawSqlite implements DatasetService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
-        String values = createRawDbValuesList(dataset);
+    private static void dropPointsTable(Dataset dataset) {
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
-            String statementText = String.format("INSERT into %s values %s", dataset.getName(), values);
+            String statementText = String.format("DROP TABLE %s;", dataset.getName());
             statement.execute(statementText);
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
