@@ -24,7 +24,7 @@ public class Dataset {
 
     public Dataset(String name) {
         this.name = name;
-        this.owner = DBManager.getInstance().getAuthService().getLoggedUser();
+        this.owner = DBManager.getInstance().getAuthService().getLoggedUserName();
         points = new ArrayList<>();
     }
 }

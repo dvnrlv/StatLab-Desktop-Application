@@ -144,7 +144,7 @@ public class StatFunctions {
 
     public static void clearResultArray() {
         resultList.clear();
-        resultArray = null;
+        resultStatArray = null;
     }
 
     private static double[] roundCoefficients(double[] coefficients) {

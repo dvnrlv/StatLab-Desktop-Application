@@ -1,6 +1,7 @@
 package com.example.ia_fxgui.services;
 
 
+import com.example.ia_fxgui.db.DBManager;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -33,7 +34,7 @@ public class PDFCreator {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfDest));
             document.open();
 
-            document.addAuthor(user.getName);
+            document.addAuthor(DBManager.getInstance().getAuthService().getLoggedUserName());
             Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
             document.add(new Paragraph("Laboratory Report:"+fileName + ", " + fileDate));
 

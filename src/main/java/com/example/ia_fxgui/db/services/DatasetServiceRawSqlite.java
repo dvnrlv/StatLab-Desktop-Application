@@ -28,7 +28,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
         try (Connection connection = DBManager.getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT OR IGNORE INTO datasets values (?, ?)")) {
             statement.setString(1, dataset.getName());
-            statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUser());
+            statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUserName());
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -40,7 +40,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
     public List<String> findLoggedUserDatasetsNames() {
         try (Connection connection = DBManager.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT name from datasets WHERE owner=?")) {
-            statement.setString(1, DBManager.getInstance().getAuthService().getLoggedUser());
+            statement.setString(1, DBManager.getInstance().getAuthService().getLoggedUserName());
             ResultSet resultSet = statement.executeQuery();
             List<String> datasetName = new ArrayList<>();
             while (resultSet.next()) {
@@ -116,7 +116,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
             throw new SqlRowNotFoundException("No dataset with provided");
         }
 
-        Dataset dataset = new Dataset(name, DBManager.getInstance().getAuthService().getLoggedUser());
+        Dataset dataset = new Dataset(name, DBManager.getInstance().getAuthService().getLoggedUserName());
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(String.format("SELECT * from %s", name));
@@ -148,7 +148,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
              );
         ) {
             statement.setString(1, name);
-            statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUser());
+            statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUserName());
             ResultSet resultSet = statement.executeQuery();
             boolean doesExist = resultSet.next();
             resultSet.close();
