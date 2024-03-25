@@ -49,7 +49,7 @@ public class UserServiceRawSqlite implements UserService {
         try (Connection connection = DBManager.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE login=?");
         ) {
-            statement.setString(0, login);
+            statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 throw new SqlRowNotFoundException("No user with provided login");
@@ -68,7 +68,7 @@ public class UserServiceRawSqlite implements UserService {
         try (Connection connection = DBManager.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE login=?");
         ) {
-            statement.setString(0, login);
+            statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             boolean doesExist = resultSet.next();
             resultSet.close();
@@ -81,8 +81,9 @@ public class UserServiceRawSqlite implements UserService {
     private static void saveNewUser(User user) {
         try (Connection connection = DBManager.getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO users values (?, ?)")) {
-            statement.setString(0, user.getLogin());
-            statement.setString(1, user.getPassword());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
