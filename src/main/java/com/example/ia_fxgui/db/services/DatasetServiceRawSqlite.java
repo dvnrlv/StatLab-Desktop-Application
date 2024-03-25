@@ -75,8 +75,8 @@ public class DatasetServiceRawSqlite implements DatasetService {
              Statement statement = connection.createStatement()) {
             String statementText = String.format("CREATE TABLE IF NOT EXISTS %s" +
                     "(" +
-                    "    x INTEGER PRIMARY KEY," +
-                    "    y INTEGER" +
+                    "    x REAL PRIMARY KEY," +
+                    "    y REAL" +
                     ");", dataset.getName());
             statement.execute(statementText);
         } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
     private static void dropPointsTable(Dataset dataset) {
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
-            String statementText = String.format("DROP TABLE %s;", dataset.getName());
+            String statementText = String.format("DROP TABLE IF EXISTS %s;", dataset.getName());
             statement.execute(statementText);
         } catch (SQLException e) {
             throw new RuntimeException(e);
