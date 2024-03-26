@@ -81,7 +81,7 @@ public class DesmosController {
                             {
                               latex: 'y',
                               values: %s,
-                              dragMode: Desmos.DragModes.XY
+                              dragMode: Desmos.DragModes.XY,
                               columnMode: Desmos.ColumnModes.POINTS
                             }
                           ]
