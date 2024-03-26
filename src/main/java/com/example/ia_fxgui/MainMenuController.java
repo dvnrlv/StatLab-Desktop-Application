@@ -5,7 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
+
+import static com.example.ia_fxgui.SceneController.showWindow;
 
 
 public class MainMenuController {
@@ -51,7 +54,13 @@ public class MainMenuController {
     // Action methods for buttons
     private void showEvaluateMenu() {
         // Code to show the evaluate menu stage or window
+
         System.out.println("Show Evaluate Menu");
+        try {
+            showWindow("EvaluationMenu.fxml", false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showDB() {
