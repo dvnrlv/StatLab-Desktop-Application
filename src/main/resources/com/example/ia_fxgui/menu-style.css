@@ -1,0 +1,31 @@
+.root {
+    -fx-background-color: #2980b9; /* Set background color of the root node */
+}
+
+/* Style for Label */
+.label {
+    -fx-text-fill: black; /* Set text color for all labels */
+}
+
+/* Style for Button with id logOutButton */
+#logOutButton {
+    -fx-background-color: #5698db; /* Set default background color */
+    -fx-text-fill: white; /* Set default text color */
+}
+
+/* Style for other Buttons */
+.button {
+    -fx-background-color: #e67a22; /* Set default background color */
+    -fx-text-fill: white; /* Set default text color */
+}
+
+/* Inverted colors on hover */
+.button:hover {
+    -fx-background-color: #e67a22; /* Set background color on hover */
+    -fx-text-fill: white; /* Set text color on hover */
+}
+
+#logOutButton:hover {
+    -fx-background-color: #5698db; /* Set background color on hover */
+    -fx-text-fill: white; /* Set text color on hover */
+}

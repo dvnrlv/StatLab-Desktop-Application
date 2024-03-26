@@ -37,7 +37,7 @@ public class MainMenuController {
             System.out.println("dateDisplay is null");
         } else {
             // Set dateDisplay and usernameDisplay (You might want to get values dynamically)
-            dateDisplay.setText("Current Date: " + LocalDate.now());
+            dateDisplay.setText("Date: " + String.valueOf(LocalDate.now()));
             usernameDisplay.setText(DBManager.getInstance().getAuthService().getLoggedUserName());
 
             // Wire up event handlers for buttons
@@ -69,6 +69,7 @@ public class MainMenuController {
         System.out.println("Log Out");
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         DBManager.getInstance().getAuthService().logout();
+
         stage.close(); // Close the current stage (window)
     }
 
