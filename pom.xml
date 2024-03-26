@@ -125,6 +125,11 @@
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version> <!-- Or the latest version -->
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>17.0.2</version>
+        </dependency>
 
 
     </dependencies>

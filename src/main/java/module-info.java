@@ -14,6 +14,7 @@ module com.example.ia_fxgui {
     requires java.desktop;
     requires javafx.swing;
     requires commons.math3;
+    requires javafx.web;
 
     opens com.example.ia_fxgui to javafx.fxml;
     exports com.example.ia_fxgui;
