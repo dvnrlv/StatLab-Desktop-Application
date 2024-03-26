@@ -80,8 +80,8 @@ public class SceneController {
             // Successful login, navigate to the main application screen
             // You can replace this with your application logic.
             System.out.println("Login Successful");
-            System.out.println(SceneController.class.getResource("main-menu.fxml"));
-            showWindow("main-menu.fxml", false);
+            System.out.println(SceneController.class.getResource("MainMenu.fxml"));
+            showWindow("MainMenu.fxml", false);
         } else {
             // Display an error message or handle unsuccessful login
             System.out.println("Login Failed");

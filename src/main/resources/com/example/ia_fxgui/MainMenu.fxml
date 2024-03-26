@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="536.0" prefWidth="547.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.MainMenuController">
+<VBox alignment="CENTER" prefHeight="536.0" prefWidth="547.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.MainMenuController" stylesheets="@menu-style.css">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -18,7 +18,7 @@
         <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="383.0">
                 <children>
-                    <Label fx:id="welcomeText1" layoutX="14.0" layoutY="35.0" text="StatLab@2024">
+                    <Label fx:id="welcomeText1" layoutX="14.0" layoutY="35.0" text="StatLab @ 2024">
                         <font>
                             <Font size="34.0" />
                         </font>
@@ -31,18 +31,18 @@
                  <items>
                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="246.0">
                         <children>
-                           <Label fx:id="dateDisplay" layoutX="38.0" layoutY="3.0" prefHeight="47.0" prefWidth="172.0">
+                           <Label fx:id="dateDisplay" layoutX="38.0" layoutY="3.0" prefHeight="47.0" prefWidth="172.0" textAlignment="JUSTIFY">
                               <font>
-                                 <Font size="38.0" />
+                                 <Font size="20.0" />
                               </font>
                            </Label>
                         </children>
                      </AnchorPane>
                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="42.0" prefWidth="196.0">
                         <children>
-                           <Label fx:id="usernameDisplay" layoutY="2.0" prefHeight="47.0" prefWidth="135.0">
+                           <Label fx:id="usernameDisplay" layoutX="8.0" layoutY="2.0" prefHeight="47.0" prefWidth="135.0" textAlignment="JUSTIFY">
                               <font>
-                                 <Font size="14.0" />
+                                 <Font size="30.0" />
                               </font>
                            </Label>
                            <Button fx:id="logOutButton" layoutX="150.0" layoutY="7.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Log Out" />
@@ -68,7 +68,7 @@
                      <Font name="Arial Bold" size="16.0" />
                   </font>
                </Button>
-               <Button layoutX="40.0" layoutY="226.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="425.0" text="Read Guide">
+               <Button fx:id="showGuide" layoutX="40.0" layoutY="226.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="425.0" text="Read Guide">
                   <font>
                      <Font name="Arial Bold" size="16.0" />
                   </font>
