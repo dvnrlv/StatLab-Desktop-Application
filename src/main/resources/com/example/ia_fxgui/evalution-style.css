@@ -1,0 +1,81 @@
+.root {
+    -fx-background-color: #5698db;
+    -fx-padding: 17px;
+}
+
+
+
+.button {
+    -fx-background-color: #e67a22;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.label {
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 16px;
+}
+
+.hyperlink {
+    -fx-text-fill: #e67a22; /* Change the color to your preference */
+    -fx-underline: false;
+    -fx-font-size: 20px; /* Optional: to remove underline */
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #0f5abd; /* Slightly darker color for hover effect */
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db;
+}
+
+
+
+#chooseStatText,
+#filenameDisplay {
+    -fx-text-fill: white; /* Set text color to white */
+    -fx-background-color: #87CEEB; /* Set background color to a lighter blue */
+}
+
+#filenamePlace,
+#filenameDisplay {
+    -fx-text-fill: white; /* Set text color to white */
+    -fx-background-color: #87CEEB; /* Set background color to a lighter blue */
+}
+
+
+
+
+
+
+
+.titled-pane > .title {
+    -fx-background-color: #de8518;
+    -fx-text-fill: #333333;
+}
+
+.titled-pane > .content {
+    -fx-background-color: #c5e6ed;
+}
+
+.choice-box .list-view .list-cell {
+    -fx-text-fill: black; /* Change the text color to black */
+}
