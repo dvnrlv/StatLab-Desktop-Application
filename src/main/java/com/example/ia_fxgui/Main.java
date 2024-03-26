@@ -6,32 +6,28 @@ import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.db.models.Point;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
 
-    private static Stage stg;
+    private static Stage primaryStage;
 
-    public static void main(String[] args) {
-        launch();
-        /*DBManager.getInstance().getAuthService().register("admin", "agile7");
-        DBManager.getInstance().getAuthService().login("admin", "agile7");
-        Dataset dataset = new Dataset("graph", "admin");
-        dataset.getPoints().add(new Point(1, 1));
-        DBManager.getInstance().getDatasetService().saveDataset(dataset);
-        try {
-            DBManager.getInstance().getDatasetService().findDatasetByName("graph");
-        } catch (SqlRowNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        DBManager.getInstance().getDatasetService().findLoggedUserDatasetsNames().forEach(System.out::println);*/
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
+
+
 
     @Override
     public void start(Stage primaryStage) {
-
+        Main.primaryStage = primaryStage;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInScene.fxml"));
             primaryStage.setScene(new Scene(loader.load()));
@@ -45,4 +41,39 @@ public class Main extends Application {
             // Handle the exception or display an error message
         }
     }
+
+    public static void main(String[] args) {
+        launch();
+    }
 }
+
+    class WarningPopup {
+
+        public static void openPopup(String customText) {
+            Stage primaryStage = Main.getPrimaryStage(); // Access the main stage
+
+            // Create a new stage for the popup window
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(primaryStage);
+
+
+            //String cssPath = Main.class.getResource("popup-style.css").toExternalForm();
+            //popupStage.getScene().getStylesheets().add(cssPath);
+
+
+            // Create components for the popup window
+            Label label = new Label(customText);
+            Button closeButton = new Button("Close");
+            closeButton.setOnAction(e -> popupStage.close());
+
+            // Layout for the popup window
+            VBox vBox = new VBox(10, label, closeButton);
+            vBox.setAlignment(Pos.CENTER);
+
+            // Set scene and show the popup window
+            popupStage.setScene(new Scene(vBox, 250, 150));
+            popupStage.setTitle("Warning");
+            popupStage.show();
+        }
+    }

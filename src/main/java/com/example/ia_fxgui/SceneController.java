@@ -50,8 +50,7 @@ public class SceneController {
     @FXML
     private void initialize() {
         DBManager.getInstance();
-        popupButton = new Button();
-        popupButton.setOnAction(e -> PopupManager.getInstance().openPopup("Custom Text for Popup"));
+
     }
 
 
@@ -76,7 +75,7 @@ public class SceneController {
         } else {
             // Display an error message or handle unsuccessful login
             System.out.println("Login Failed");
-            PopupManager.getInstance().openPopup("Login Failed");
+            WarningPopup.openPopup("Login Failed");
         }
     }
 
