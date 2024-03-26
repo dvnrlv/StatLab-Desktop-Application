@@ -25,8 +25,9 @@ public class DesmosController {
         Scene scene = new Scene(root);
         stage.setTitle("Desmos");
         stage.setScene(scene);
-        stage.setWidth(450);
-        stage.setHeight(300);
+        stage.setFullScreen(true);
+        //stage.setWidth(450);
+        //stage.setHeight(300);
     }
 
     private VBox setUpRoot() {

@@ -9,7 +9,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-    public class EvaluationMenuController {
+import java.io.IOException;
+
+import static com.example.ia_fxgui.SceneController.showWindow;
+
+public class EvaluationMenuController {
 
         @FXML
         private CheckBox statPearson;
@@ -80,6 +84,11 @@ import javafx.scene.control.TextField;
 
         private void exitToMainMenu() {
             System.out.println("Exit to Main Menu button clicked.");
+            try {
+                showWindow("MainMenu.fxml", false, true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             // Add logic to exit to main menu
         }
 
@@ -91,6 +100,8 @@ import javafx.scene.control.TextField;
         private void plotInDesmos() {
             System.out.println("Plot in Desmos button clicked.");
             // Add logic to plot data in Desmos
+
+            new DesmosController().launchDesmos(new Double[][]{{1.0, 2.0}, {1.0,2.0},{2.0,6.0}});
         }
 
         private void saveAsPDF() {

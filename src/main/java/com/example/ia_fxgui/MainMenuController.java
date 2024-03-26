@@ -1,5 +1,6 @@
 package com.example.ia_fxgui;
 import com.example.ia_fxgui.db.DBManager;
+import com.example.ia_fxgui.services.CSVFileParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,6 +55,32 @@ public class MainMenuController {
     // Action methods for buttons
     private void showEvaluateMenu() {
         // Code to show the evaluate menu stage or window
+
+        Stage stage = new Stage(); // Create a new stage (you can pass your existing stage if you have access to it)
+        String filePath = CSVFileUpload.chooseCSVFile(stage);
+        // Process the selected CSV file
+        if (filePath != null) {
+            System.out.println("Selected CSV file path: " + filePath);
+            try {
+                Double[][] dataSet = CSVFileParser.parseCSV(filePath);
+                // Now you have the parsed data set, you can use it as needed
+                // For example, you can pass it to another method or display it in your application
+                // Example:
+
+                for (Double[] row : dataSet) {
+                    for (Double value : row) {
+                        System.out.print(value + " ");
+                    }
+                    System.out.println();
+                }
+
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
+                // Handle the exception as needed
+            }
+        } else {
+            System.out.println("No file selected.");
+        }
 
         System.out.println("Show Evaluate Menu");
         try {
