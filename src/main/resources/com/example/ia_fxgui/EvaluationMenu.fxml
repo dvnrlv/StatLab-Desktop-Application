@@ -16,33 +16,34 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.EvaluationMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@evalution-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.EvaluationMenuController">
     <center>
         <SplitPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
-                <SplitPane dividerPositions="0.29515050167224083" prefHeight="160.0" prefWidth="200.0">
+                <SplitPane dividerPositions="0.2505787037037037" prefHeight="160.0" prefWidth="200.0">
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                             <children>
-                                <VBox layoutY="-1.0" prefHeight="400.0" prefWidth="173.0">
+                                <VBox layoutY="-1.0" prefHeight="568.0" prefWidth="218.0">
                                     <children>
-                                        <SplitPane dividerPositions="0.5866834170854272" orientation="VERTICAL" prefHeight="400.0" prefWidth="198.0">
+                                        <SplitPane dividerPositions="0.5123456790123457" orientation="VERTICAL" prefHeight="569.0" prefWidth="218.0">
                                             <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="172.0" prefWidth="171.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="319.0" prefWidth="216.0">
                                                     <children>
-                                                        <TextField editable="false" layoutX="-2.0" prefHeight="26.0" prefWidth="174.0" text="Choose Options" />
-                                                        <ScrollPane layoutX="-2.0" layoutY="26.0" prefHeight="200.0" prefWidth="173.0">
+                                                        <TextField id="chooseStatText" fx:id="chooseStatText" editable="false" layoutX="-2.0" prefHeight="39.0" prefWidth="211.0" text="Choose Statistical Functions" />
+                                                        <ScrollPane layoutX="-1.0" layoutY="39.0" prefHeight="256.0" prefWidth="212.0">
                                                             <content>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="226.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="193.0">
                                                                     <children>
-                                                                        <TextField editable="false" layoutY="1.0" prefHeight="26.0" prefWidth="129.0" text="Best Fit Polynomial Degree">
+                                                                        <TextField editable="false" layoutY="1.0" prefHeight="39.0" prefWidth="152.0" text="Best Fit Polynomial">
                                                                             <font>
                                                                                 <Font size="10.0" />
                                                                             </font>
                                                                         </TextField>
-                                                                        <VBox layoutY="27.0" prefHeight="417.0" prefWidth="226.0">
+                                                      <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                                                        <VBox layoutX="1.0" layoutY="42.0" prefHeight="413.0" prefWidth="231.0">
                                                                             <children>
-                                                                                <CheckBox fx:id="statPearson" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Pearson's Correlation" />
+                                                                                <CheckBox fx:id="statPearson" mnemonicParsing="false" prefHeight="28.0" prefWidth="226.0" text="Pearson's Correlation" />
                                                                                 <CheckBox fx:id="statKendall" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Kendall's correlation" />
                                                                                 <CheckBox fx:id="statSpearman" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Spearman's correlation" />
                                                                                 <CheckBox fx:id="statCovariance" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Covariance" />
@@ -54,28 +55,34 @@
                                                                                 <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
                                                                             </children>
                                                                         </VBox>
-                                                                        <ChoiceBox fx:id="polynomialChoiceBox" layoutX="129.0" prefHeight="27.0" prefWidth="32.0" />
+                                                                        <ChoiceBox fx:id="polynomialChoiceBox" layoutX="150.0" layoutY="1.0" prefHeight="39.0" prefWidth="42.0" />
                                                                     </children>
                                                                 </AnchorPane>
                                                             </content>
                                                         </ScrollPane>
                                                     </children></AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="243.0" prefWidth="196.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="183.0" prefWidth="216.0">
                                                     <children>
-                                                        <ScrollPane layoutX="-3.0" layoutY="-1.0" prefHeight="52.0" prefWidth="174.0">
+                                                        <ScrollPane layoutX="-3.0" layoutY="-1.0" prefHeight="88.0" prefWidth="215.0">
                                                             <content>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="555.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="70.0" prefWidth="555.0">
                                                                     <children>
-                                                                        <TextField layoutX="1.0" prefHeight="39.0" prefWidth="555.0" promptText="f(x), Model Equation" />
+                                                                        <TextField layoutX="1.0" prefHeight="75.0" prefWidth="553.0" promptText="f(x), Model Equation">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font></TextField>
+                                                      <Separator prefWidth="200.0" />
                                                                     </children>
                                                                 </AnchorPane>
                                                             </content>
                                                         </ScrollPane>
-                                                        <VBox layoutX="-2.0" layoutY="52.0" prefHeight="109.0" prefWidth="173.0">
+                                                        <VBox layoutX="-2.0" layoutY="89.0" prefHeight="183.0" prefWidth="217.0">
                                                             <children>
-                                                                <Button fx:id="statCalc" mnemonicParsing="false" prefHeight="54.0" prefWidth="173.0" text="Calculate and Graph" />
+                                                                <Button fx:id="statCalc" mnemonicParsing="false" prefHeight="54.0" prefWidth="211.0" text="Calculate and Graph" />
                                                                 <Separator prefWidth="200.0" />
-                                                                <Button fx:id="statSave" mnemonicParsing="false" prefHeight="55.0" prefWidth="173.0" text="Save Data Set" />
+                                                                <Button fx:id="statSave" mnemonicParsing="false" prefHeight="55.0" prefWidth="213.0" text="Save Data Set" />
+                                                <Separator prefWidth="200.0" />
+                                                            <Button fx:id="exitToMenu" mnemonicParsing="false" prefHeight="64.0" prefWidth="217.0" text="Exit to Main Menu" />
                                                             </children>
                                                         </VBox>
                                                     </children></AnchorPane>
@@ -87,17 +94,17 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                             <children>
-                                <AnchorPane layoutY="28.0" prefHeight="371.0" prefWidth="396.0">
+                                <AnchorPane layoutY="42.0" prefHeight="522.0" prefWidth="605.0">
                                     <children>
-                                        <SplitPane dividerPositions="0.6545698924731183" layoutY="-3.0" orientation="VERTICAL" prefHeight="374.0" prefWidth="414.0">
+                                        <SplitPane dividerPositions="0.6545698924731183" layoutY="-3.0" orientation="VERTICAL" prefHeight="539.0" prefWidth="642.0">
                                             <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="640.0">
                                                     <children>
-                                                        <SplitPane dividerPositions="0.6882640586797066" layoutY="-2.0" prefHeight="242.0" prefWidth="418.0">
+                                                        <SplitPane dividerPositions="0.69296875" layoutY="-6.0" prefHeight="366.0" prefWidth="642.0">
                                                             <items>
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                     <children>
-                                                                        <LineChart fx:id="resultLineChart" layoutX="-3.0" layoutY="1.0" prefHeight="239.0" prefWidth="280.0">
+                                                                        <LineChart fx:id="resultLineChart" layoutY="7.0" prefHeight="346.0" prefWidth="440.0">
                                                                             <xAxis>
                                                                                 <CategoryAxis side="BOTTOM" />
                                                                             </xAxis>
@@ -107,20 +114,20 @@
                                                                         </LineChart>
                                                                     </children>
                                                                 </AnchorPane>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="147.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="333.0">
                                                                     <children>
-                                                                        <VBox prefHeight="238.0" prefWidth="120.0">
+                                                                        <VBox layoutX="4.0" layoutY="3.0" prefHeight="338.0" prefWidth="191.0">
                                                                             <children>
-                                                                                <Separator prefWidth="200.0" />
-                                                                                <Button fx:id="showLargerChart" mnemonicParsing="false" prefHeight="72.0" prefWidth="120.0" text="Show Larger Chart">
+                                                                                <Separator prefHeight="23.0" prefWidth="182.0" />
+                                                                                <Button fx:id="showLargerChart" mnemonicParsing="false" prefHeight="72.0" prefWidth="189.0" text="Larger Chart">
                                                                                     <font>
                                                                                         <Font size="11.0" />
                                                                                     </font>
                                                                                 </Button>
-                                                                                <Separator prefWidth="200.0" />
-                                                                                <Button fx:id="plotDesmos" mnemonicParsing="false" prefHeight="80.0" prefWidth="120.0" text="Plot in Desmos" />
-                                                                                <Separator prefWidth="200.0" />
-                                                                                <Button fx:id="producePDF" mnemonicParsing="false" prefHeight="78.0" prefWidth="120.0" text="Save as PDF" />
+                                                                                <Separator prefHeight="32.0" prefWidth="182.0" />
+                                                                                <Button fx:id="plotDesmos" mnemonicParsing="false" prefHeight="80.0" prefWidth="186.0" text="Plot in Desmos" />
+                                                                                <Separator prefHeight="26.0" prefWidth="182.0" />
+                                                                                <Button fx:id="producePDF" mnemonicParsing="false" prefHeight="78.0" prefWidth="188.0" text="Save as PDF" />
                                                                             </children>
                                                                         </VBox>
                                                                     </children>
@@ -129,13 +136,13 @@
                                                         </SplitPane>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="161.0" prefWidth="615.0">
                                                     <children>
-                                                        <ScrollPane layoutY="-1.0" prefHeight="127.0" prefWidth="411.0">
+                                                        <ScrollPane layoutY="-1.0" prefHeight="183.0" prefWidth="643.0">
                                                             <content>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="372.0" prefWidth="396.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="642.0">
                                                                     <children>
-                                                                        <ListView fx:id="resultListView" layoutX="-1.0" layoutY="1.0" prefHeight="371.0" prefWidth="395.0" />
+                                                                        <ListView fx:id="resultListView" layoutX="-1.0" layoutY="-2.0" prefHeight="374.0" prefWidth="644.0" />
                                                                     </children>
                                                                 </AnchorPane>
                                                             </content>
@@ -146,20 +153,7 @@
                                         </SplitPane>
                                     </children>
                                 </AnchorPane>
-                                <SplitPane dividerPositions="0.5155502392344498" layoutX="-1.0" layoutY="-3.0" prefHeight="28.0" prefWidth="420.0">
-                                    <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="32.0">
-                                            <children>
-                                                <TextField fx:id="filenameDisplay" layoutY="1.0" prefHeight="26.0" prefWidth="213.0" />
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="199.0">
-                                            <children>
-                                                <Button fx:id="exitToMenu" layoutX="-2.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="200.0" text="Exit to Main Menu" />
-                                            </children>
-                                        </AnchorPane>
-                                    </items>
-                                </SplitPane>
+                                    <TextField id="filenamePlace" fx:id="filenameDisplay" layoutX="4.0" layoutY="-1.0" prefHeight="17.0" prefWidth="635.0" />
                             </children></AnchorPane>
                     </items>
                 </SplitPane>

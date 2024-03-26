@@ -24,8 +24,3 @@
     -fx-background-color: #e67a22; /* Set background color on hover */
     -fx-text-fill: white; /* Set text color on hover */
 }
-
-#logOutButton:hover {
-    -fx-background-color: #5698db; /* Set background color on hover */
-    -fx-text-fill: white; /* Set text color on hover */
-}

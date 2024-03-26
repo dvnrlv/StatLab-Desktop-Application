@@ -57,7 +57,7 @@ public class MainMenuController {
 
         System.out.println("Show Evaluate Menu");
         try {
-            showWindow("EvaluationMenu.fxml", false);
+            showWindow("EvaluationMenu.fxml", false, true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

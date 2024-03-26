@@ -53,23 +53,43 @@ public class SceneController {
 
     }
 
-    @FXML
-    public static void showWindow(String fxmlFile, boolean fullDisplay) throws IOException {
+
+
+    private static Stage currentStage = null;
+
+    public static void showWindow(String fxmlFile, boolean fullDisplay, boolean closePrevious) throws IOException {
         try {
+            // Load FXML file
             Parent root = FXMLLoader.load(SceneController.class.getResource(fxmlFile));
-            Stage primaryStage = new Stage();
-            primaryStage.setScene(new Scene(root));
-            if(fullDisplay){
-                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+
+            // Close the current stage if it's open
+            if (currentStage != null && closePrevious) {
+                currentStage.close();
             }
-            else{
-                primaryStage.setResizable(false);
+
+            // Create a new stage
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+
+            // Set fullscreen or resizable based on the parameter
+            if (fullDisplay) {
+                newStage.setFullScreen(!newStage.isFullScreen());
+            } else {
+                newStage.setResizable(false);
             }
-            primaryStage.show();
+
+            // Set the new stage as the current stage and show it
+            currentStage = newStage;
+            currentStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
+
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
@@ -79,9 +99,11 @@ public class SceneController {
         if (DBManager.getInstance().getAuthService().login(username, password)) {
             // Successful login, navigate to the main application screen
             // You can replace this with your application logic.
+            ((Stage) usernameField.getScene().getWindow()).close();
             System.out.println("Login Successful");
             System.out.println(SceneController.class.getResource("MainMenu.fxml"));
-            showWindow("MainMenu.fxml", false);
+            showWindow("MainMenu.fxml", false, true);
+
         } else {
             // Display an error message or handle unsuccessful login
             System.out.println("Login Failed");
@@ -127,8 +149,6 @@ public class SceneController {
             e.printStackTrace();
         }
     }
-
-    private static Stage currentStage;
     private static Scene currentScene;
 
     // Setter methods to set the current Stage and Scene
