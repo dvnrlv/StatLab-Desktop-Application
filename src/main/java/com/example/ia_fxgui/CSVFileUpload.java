@@ -21,8 +21,15 @@ import java.io.IOException;
 
 
 public class CSVFileUpload extends Application {
-    public static void main(String[] args) {
-        launch(args);
+
+    public static File chooseCSVFile(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose CSV File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File fileCSV = fileChooser.showOpenDialog(stage);
+        return fileCSV;
+
+
     }
 
     @Override

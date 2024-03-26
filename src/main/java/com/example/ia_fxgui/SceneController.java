@@ -107,7 +107,7 @@ public class SceneController {
         } else {
             // Display an error message or handle unsuccessful login
             System.out.println("Login Failed");
-            WarningPopup.openPopup("Login Failed");
+            Main.WarningPopup.openPopup("Login Failed");
         }
     }
 

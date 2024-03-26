@@ -1,5 +1,7 @@
 package com.example.ia_fxgui.services;
 
+import com.example.ia_fxgui.Main.WarningPopup;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -63,6 +65,7 @@ public class CSVFileParser {
                     columns++;
                 } catch (NumberFormatException e) {
                     System.out.println("Non-numeric value found at line " + lineNumber + ": " + value.toString().trim());
+                    WarningPopup.openPopup("Non-numeric value found at line " + lineNumber + ": " + value.toString().trim());
                     row.add(null); // Add null if non-numeric value is found
                 }
                 value.setLength(0); // clear StringBuilder for next value
@@ -77,6 +80,7 @@ public class CSVFileParser {
             columns++;
         } catch (NumberFormatException e) {
             System.out.println("Non-numeric value found at line " + lineNumber + ": " + value.toString().trim());
+            WarningPopup.openPopup("Non-numeric value found at line " + lineNumber + ": " + value.toString().trim());
             row.add(null); // Add null if non-numeric value is found
         }
 
@@ -84,6 +88,7 @@ public class CSVFileParser {
         if (expectedColumns != -1 && columns != expectedColumns) {
             // Handle cases where the number of columns doesn't match
             System.out.println("Number of columns does not match at line " + lineNumber);
+            WarningPopup.openPopup("Number of columns does not match at line " + lineNumber);
             if (columns < expectedColumns) {
                 // Add null values to match the expected number of columns
                 for (int i = columns; i < expectedColumns; i++) {

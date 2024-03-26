@@ -47,9 +47,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
-}
-
-    class WarningPopup {
+    public class WarningPopup {
 
         public static void openPopup(String customText) {
             Stage primaryStage = Main.getPrimaryStage(); // Access the main stage
@@ -84,3 +82,5 @@ public class Main extends Application {
             popupStage.show();
         }
     }
+
+}
