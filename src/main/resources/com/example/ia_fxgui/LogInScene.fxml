@@ -3,19 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane
-        stylesheets="@sceneStyle.css"
-        fx:id="loginPane"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.ia_fxgui.SceneController"
-            prefWidth="400" prefHeight="300">
+<BorderPane fx:id="loginPane" prefHeight="367.0" prefWidth="400" stylesheets="@sceneStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.SceneController">
 
 <!-- Header -->
 <top>
    <VBox alignment="CENTER">
-      <Label text="Welcome to Your App" styleClass="header-label" />
+      <Label styleClass="header-label" text="Welcome to StatLab" />
    </VBox>
 </top>
 
@@ -26,13 +19,13 @@
       <tabs>
          <Tab text="Login">
             <content>
-               <VBox spacing="10" alignment="CENTER">
-                  <Label text="Login to Your Account" styleClass="form-label" />
+               <VBox alignment="CENTER" spacing="10">
+                  <Label styleClass="form-label" text="Login to Your Account" />
 
                   <TextField fx:id="usernameField" promptText="Username" styleClass="text-field" />
                   <PasswordField fx:id="passwordField" promptText="Password" styleClass="text-field" />
 
-                  <Button text="Login" onAction="#handleLogin" styleClass="action-button" />
+                  <Button onAction="#handleLogin" styleClass="action-button" text="Login" />
 
                   <Hyperlink onAction="#showRegisterScreen" text="Register" />
                </VBox>
@@ -55,7 +48,7 @@
 <!-- Footer -->
 <bottom>
    <HBox alignment="CENTER">
-      <Label text="Your App © 2024" styleClass="footer-label" />
+      <Label styleClass="footer-label" text="StatLab © 2024" />
    </HBox>
 </bottom>
 </BorderPane>

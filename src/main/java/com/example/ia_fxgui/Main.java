@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+
 public class Main extends Application {
 
 
@@ -33,7 +35,7 @@ public class Main extends Application {
             primaryStage.setScene(new Scene(loader.load()));
             primaryStage.setTitle("Login and Registration");
             //primaryStage.setMaximized(true);
-            primaryStage.setFullScreen(!primaryStage.isFullScreen());
+            //primaryStage.setFullScreen(!primaryStage.isFullScreen());
             primaryStage.show();
 
         } catch (Exception e) {
@@ -58,10 +60,6 @@ public class Main extends Application {
             popupStage.initOwner(primaryStage);
 
 
-            //String cssPath = Main.class.getResource("popup-style.css").toExternalForm();
-            //popupStage.getScene().getStylesheets().add(cssPath);
-
-
             // Create components for the popup window
             Label label = new Label(customText);
             Button closeButton = new Button("Close");
@@ -74,6 +72,15 @@ public class Main extends Application {
             // Set scene and show the popup window
             popupStage.setScene(new Scene(vBox, 250, 150));
             popupStage.setTitle("Warning");
+
+            try {
+                Scene scene = popupStage.getScene();
+                scene.getStylesheets().add(WarningPopup.class.getResource("popup-style.css").toExternalForm());
+                scene.getRoot().getStyleClass().add("popup-scene");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             popupStage.show();
         }
     }

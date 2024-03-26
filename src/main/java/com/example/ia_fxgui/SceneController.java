@@ -53,18 +53,26 @@ public class SceneController {
 
     }
 
-
-    public void switchToSceneMain(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main-menu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setFullScreen(!stage.isFullScreen());
-        stage.show();
+    @FXML
+    public static void showWindow(String fxmlFile, boolean fullDisplay) throws IOException {
+        try {
+            Parent root = FXMLLoader.load(SceneController.class.getResource(fxmlFile));
+            Stage primaryStage = new Stage();
+            primaryStage.setScene(new Scene(root));
+            if(fullDisplay){
+                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+            }
+            else{
+                primaryStage.setResizable(false);
+            }
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void handleLogin(ActionEvent event) {
+    private void handleLogin(ActionEvent event) throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -72,6 +80,8 @@ public class SceneController {
             // Successful login, navigate to the main application screen
             // You can replace this with your application logic.
             System.out.println("Login Successful");
+            System.out.println(SceneController.class.getResource("main-menu.fxml"));
+            showWindow("main-menu.fxml", false);
         } else {
             // Display an error message or handle unsuccessful login
             System.out.println("Login Failed");
@@ -86,7 +96,7 @@ public class SceneController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setFullScreen(!stage.isFullScreen());
+            //stage.setFullScreen(!stage.isFullScreen());
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -9,44 +9,71 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="518.0" prefWidth="793.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.SceneController">
+<VBox alignment="CENTER" prefHeight="536.0" prefWidth="547.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.MainMenuController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <AmbientLight color="CHARTREUSE" lightOn="true" />
-    <SplitPane dividerPositions="0.5679094540612517" prefHeight="88.0" prefWidth="753.0">
+    <SplitPane dividerPositions="0.5" prefHeight="150.0" prefWidth="753.0">
         <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="94.0" prefWidth="458.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="383.0">
                 <children>
-                    <Label fx:id="welcomeText1" layoutX="34.0" layoutY="22.0" text="Statistical Evaluation of Experimental Data">
+                    <Label fx:id="welcomeText1" layoutX="14.0" layoutY="35.0" text="StatLab@2024">
                         <font>
-                            <Font size="20.0" />
+                            <Font size="34.0" />
                         </font>
                     </Label>
                 </children>
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="127.0" prefWidth="317.0">
-                <children>
-
-                    <Label fx:id="welcomeText" layoutX="65.0" layoutY="38.0" prefHeight="18.0" prefWidth="28.0" />
-                </children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="64.0">
+            <children>
+               <SplitPane dividerPositions="0.5045454545454545" orientation="VERTICAL" prefHeight="112.0" prefWidth="249.0">
+                 <items>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="246.0">
+                        <children>
+                           <Label fx:id="dateDisplay" layoutX="38.0" layoutY="3.0" prefHeight="47.0" prefWidth="172.0">
+                              <font>
+                                 <Font size="38.0" />
+                              </font>
+                           </Label>
+                        </children>
+                     </AnchorPane>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="42.0" prefWidth="196.0">
+                        <children>
+                           <Label fx:id="usernameDisplay" layoutY="2.0" prefHeight="47.0" prefWidth="135.0">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                           </Label>
+                           <Button fx:id="logOutButton" layoutX="150.0" layoutY="7.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Log Out" />
+                        </children>
+                     </AnchorPane>
+                 </items>
+               </SplitPane>
+            </children>
             </AnchorPane>
         </items>
     </SplitPane>
-    <SplitPane dividerPositions="0.5692410119840213" prefHeight="378.0" prefWidth="764.0">
+    <SplitPane prefHeight="378.0" prefWidth="764.0">
         <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="238.0" prefWidth="373.0">
-                <children>
-                    <Button alignment="TOP_LEFT" layoutX="60.0" layoutY="28.0" onAction="#onHelloButtonClick" prefHeight="86.0" prefWidth="325.0" text="Button1" />
-                    <Button alignment="TOP_LEFT" layoutX="58.0" layoutY="131.0" onAction="#onHelloButtonClick" prefHeight="86.0" prefWidth="325.0" text="Button2" />
-                    <Button alignment="TOP_LEFT" layoutX="57.0" layoutY="239.0" onAction="#onHelloButtonClick" prefHeight="86.0" prefWidth="325.0" text="Button3" />
-                </children>
-            </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="243.0" prefWidth="371.0">
-                <children>
-                    <Button alignment="TOP_LEFT" layoutX="69.0" layoutY="103.0" minHeight="0.0" onAction="#switchToScene2" prefHeight="126.0" prefWidth="209.0" text="Switch Scene" />
-                </children>
-            </AnchorPane>
+            <children>
+               <Button fx:id="showDB" layoutX="40.0" layoutY="120.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="425.0" text="Access Previous Logs">
+                  <font>
+                     <Font name="Arial Bold" size="16.0" />
+                  </font>
+               </Button>
+               <Button fx:id="showEvaluateMenu" layoutX="40.0" layoutY="14.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="425.0" text="Evaluate Experimental Data Set">
+                  <font>
+                     <Font name="Arial Bold" size="16.0" />
+                  </font>
+               </Button>
+               <Button layoutX="40.0" layoutY="226.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="425.0" text="Read Guide">
+                  <font>
+                     <Font name="Arial Bold" size="16.0" />
+                  </font>
+               </Button>
+            </children></AnchorPane>
         </items>
     </SplitPane>
 </VBox>
