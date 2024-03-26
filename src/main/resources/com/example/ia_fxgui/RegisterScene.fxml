@@ -3,12 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane
-        stylesheets="@sceneStyle.css"
-        fx:id="registerPane"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.ia_fxgui.SceneController" prefWidth="400" prefHeight="300">
+<BorderPane fx:id="registerPane" prefHeight="356.0" prefWidth="400" stylesheets="@sceneStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.SceneController">
 
     <center>
         <TabPane>
@@ -16,15 +11,15 @@
 
                 <Tab text="Register">
                     <content>
-                        <VBox spacing="10" alignment="CENTER">
-                            <Label text="Create an Account" styleClass="form-label"/>
+                        <VBox alignment="CENTER" spacing="10">
+                            <Label styleClass="form-label" text="Create an Account" />
 
-                            <TextField fx:id="registerUsernameField" promptText="Username" styleClass="text-field"/>
-                            <PasswordField fx:id="registerPasswordField" promptText="Password" styleClass="text-field"/>
+                            <TextField fx:id="registerUsernameField" promptText="Username" styleClass="text-field" />
+                            <PasswordField fx:id="registerPasswordField" promptText="Password" styleClass="text-field" />
 
-                            <Button text="Register" onAction="#handleRegistration" styleClass="action-button"/>
+                            <Button onAction="#handleRegistration" styleClass="action-button" text="Register" />
 
-                            <Hyperlink text="Back to Login" onAction="#showLoginScreen"/>
+                            <Hyperlink onAction="#showLoginScreen" text="Back to Login" />
                         </VBox>
                     </content>
                 </Tab>
@@ -36,7 +31,7 @@
     <!-- Footer -->
     <bottom>
         <HBox alignment="CENTER">
-            <Label text="Your App © 2024" styleClass="footer-label"/>
+            <Label styleClass="footer-label" text="StatLab © 2024" />
         </HBox>
     </bottom>
 </BorderPane>

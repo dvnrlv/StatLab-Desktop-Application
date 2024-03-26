@@ -1,5 +1,4 @@
 package com.example.ia_fxgui.services;
-import com.example.ia_fxgui.PopupManager;
 
 import java.util.Stack;
 
@@ -56,12 +55,10 @@ public class EquationReader {
                 return operand1 * operand2;
             case '/':
                 if (operand2 == 0) {
-                    PopupManager.getInstance().openPopup("Division by zero!");
                     throw new ArithmeticException("Division by zero!");
                 }
                 return operand1 / operand2;
             default:
-                PopupManager.getInstance().openPopup("Invalid operator: " + operator);
                 throw new IllegalArgumentException("Invalid operator: " + operator);
 
         }

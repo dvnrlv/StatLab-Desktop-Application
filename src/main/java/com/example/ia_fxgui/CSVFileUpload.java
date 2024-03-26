@@ -52,28 +52,28 @@ public class CSVFileUpload extends Application {
                     System.out.println(selectedFile.getPath());
 
                     try {
-                        Double[][] dataSet = CSVFileParser.parseCSV(selectedFile.getPath());
+                        Double[][] dataSetArray = CSVFileParser.parseCSV(selectedFile.getPath());
 
 
                         Dataset dataset = new Dataset(fileName);
-                        for (int i = 0; i < dataSet.length; i++) {
-                            dataset.getPoints().add(new Point(dataSet[i][0], dataSet[i][1]));
+                        for (int i = 0; i < dataSetArray.length; i++) {
+                            dataset.getPoints().add(new Point(dataSetArray[i][0], dataSetArray[i][1]));
                         }
                         DBManager.getInstance().getDatasetService().saveDataset(dataset); //saving dataSet to DB
 
 
                         // Print the contents of the array in a double[][] format
                         System.out.print("[");
-                        for (int i = 0; i < dataSet.length; i++) {
+                        for (int i = 0; i < dataSetArray.length; i++) {
                             System.out.print("[");
-                            for (int j = 0; j < dataSet[i].length; j++) {
-                                System.out.print(dataSet[i][j]);
-                                if (j < dataSet[i].length - 1) {
+                            for (int j = 0; j < dataSetArray[i].length; j++) {
+                                System.out.print(dataSetArray[i][j]);
+                                if (j < dataSetArray[i].length - 1) {
                                     System.out.print(", ");
                                 }
                             }
                             System.out.print("]");
-                            if (i < dataSet.length - 1) {
+                            if (i < dataSetArray.length - 1) {
                                 System.out.print(", ");
                             }
                         }
