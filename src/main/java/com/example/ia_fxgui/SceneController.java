@@ -134,6 +134,7 @@ public class SceneController {
 
         // After successful registration, you can navigate back to the login screen
         showLoginScreen(event);
+        Main.WarningPopup.openPopup("Registration Successful");
     }
 
     @FXML
@@ -143,7 +144,6 @@ public class SceneController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setFullScreen(!stage.isFullScreen());
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

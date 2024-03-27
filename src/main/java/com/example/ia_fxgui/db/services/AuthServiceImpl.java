@@ -9,7 +9,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean register(String login, String password) {
         if(password.length()>=6) {
-            Main.WarningPopup.openPopup("Registration Successful");
             return DBManager.getInstance().getUserService().register(login, password);
         }
         else{
