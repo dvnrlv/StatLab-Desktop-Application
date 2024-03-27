@@ -9,10 +9,15 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean register(String login, String password) {
         if (password.length() >= 6) {
-            Main.WarningPopup.openPopup("Registration Successful");
-            return DBManager.getInstance().getUserService().register(login, password);
+            if (DBManager.getInstance().getUserService().register(login, password)) {
+                Main.WarningPopup.openPopup("Registration Successful");
+                return true;
+            } else {
+                Main.WarningPopup.openPopup("Duplicate user login");
+                return false;
+            }
         } else {
-            Main.WarningPopup.openPopup("Registration Unsuccessful");
+            Main.WarningPopup.openPopup("Registration Unsuccessful. Password is too weak");
             return false;
         }
     }
