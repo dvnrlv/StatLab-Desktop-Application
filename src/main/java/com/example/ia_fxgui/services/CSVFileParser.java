@@ -11,6 +11,8 @@ import java.util.List;
 
 public class CSVFileParser {
 
+    public static Double[][] parsedDataSet;
+
     public static Double[][] parseCSV(String fileName) throws IOException, IllegalArgumentException {
         List<List<Double>> data = new ArrayList<>();
 
@@ -45,6 +47,8 @@ public class CSVFileParser {
                 }
             }
         }
+
+        parsedDataSet = dataSet;
 
         return dataSet;
 
@@ -104,4 +108,8 @@ public class CSVFileParser {
 
         return row;
     }
+    public static void clearParsedDataSet(){
+        parsedDataSet = null;
+    }
+
 }

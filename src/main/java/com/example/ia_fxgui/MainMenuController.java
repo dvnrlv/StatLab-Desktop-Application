@@ -80,6 +80,7 @@ public class MainMenuController {
             }
         } else {
             System.out.println("No file selected.");
+            Main.WarningPopup.openPopup("No file selected.");
         }
 
         System.out.println("Show Evaluate Menu");

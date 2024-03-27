@@ -1,5 +1,6 @@
 package com.example.ia_fxgui.db.services;
 
+import com.example.ia_fxgui.Main;
 import com.example.ia_fxgui.db.DBManager;
 
 public class AuthServiceImpl implements AuthService {
@@ -7,7 +8,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean register(String login, String password) {
-        return DBManager.getInstance().getUserService().register(login, password);
+        if(password.length()>=6) {
+            Main.WarningPopup.openPopup("Registration Successful");
+            return DBManager.getInstance().getUserService().register(login, password);
+        }
+        else{
+            Main.WarningPopup.openPopup("Registration Unsuccessful");
+            return false;
+        }
     }
 
     @Override
