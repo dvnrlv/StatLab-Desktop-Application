@@ -12,9 +12,12 @@ import java.util.List;
 public class CSVFileParser {
 
     public static Double[][] parsedDataSet;
+    public static String datasetName;
+
 
     public static Double[][] parseCSV(String fileName) throws IOException, IllegalArgumentException {
         List<List<Double>> data = new ArrayList<>();
+        datasetName = fileName;
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -108,8 +111,13 @@ public class CSVFileParser {
 
         return row;
     }
-    public static void clearParsedDataSet(){
+
+    public static void clearParsedDataSet() {
         parsedDataSet = null;
     }
 
+    public static String getDatasetNameWOExtension() {
+        int dotId = datasetName.indexOf('.');
+        return datasetName.substring(0, dotId);
+    }
 }

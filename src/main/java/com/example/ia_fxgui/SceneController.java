@@ -130,11 +130,9 @@ public class SceneController {
         String username = registerUsernameField.getText();
         String password = registerPasswordField.getText();
 
-        DBManager.getInstance().getAuthService().register(username, password);
-
-        // After successful registration, you can navigate back to the login screen
-        showLoginScreen(event);
-        Main.WarningPopup.openPopup("Registration Successful");
+        if (DBManager.getInstance().getAuthService().register(username, password)) {
+            showLoginScreen(event);
+        }
     }
 
     @FXML
@@ -144,6 +142,7 @@ public class SceneController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
+            stage.setFullScreen(!stage.isFullScreen());
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
