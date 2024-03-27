@@ -130,10 +130,9 @@ public class SceneController {
         String username = registerUsernameField.getText();
         String password = registerPasswordField.getText();
 
-        DBManager.getInstance().getAuthService().register(username, password);
-
-        // After successful registration, you can navigate back to the login screen
-        showLoginScreen(event);
+        if (DBManager.getInstance().getAuthService().register(username, password)) {
+            showLoginScreen(event);
+        }
     }
 
     @FXML
