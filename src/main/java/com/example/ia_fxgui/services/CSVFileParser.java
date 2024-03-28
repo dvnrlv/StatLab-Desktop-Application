@@ -3,6 +3,7 @@ package com.example.ia_fxgui.services;
 import com.example.ia_fxgui.Main.WarningPopup;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class CSVFileParser {
 
     public static Double[][] parseCSV(String fileName) throws IOException, IllegalArgumentException {
         List<List<Double>> data = new ArrayList<>();
-        datasetName = fileName;
+        datasetName = new File(fileName).getName();
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;

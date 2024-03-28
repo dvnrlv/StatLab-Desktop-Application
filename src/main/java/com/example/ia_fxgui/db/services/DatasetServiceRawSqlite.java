@@ -75,7 +75,8 @@ public class DatasetServiceRawSqlite implements DatasetService {
              Statement statement = connection.createStatement()) {
             String statementText = String.format("CREATE TABLE IF NOT EXISTS %s" +
                     "(" +
-                    "    x REAL PRIMARY KEY," +
+                    "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "    x REAL," +
                     "    y REAL" +
                     ");", dataset.getName());
             statement.execute(statementText);
@@ -99,6 +100,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
         int pointsNumber = dataset.getPoints().size();
         for (int i = 0; i < pointsNumber; i++) {
             pointsForStatement.append('(')
+                    .append("NULL, ")
                     .append(dataset.getPoints().get(i).toDbRaw())
                     .append(')');
 
@@ -119,7 +121,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
         Dataset dataset = new Dataset(name, DBManager.getInstance().getAuthService().getLoggedUserName());
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(String.format("SELECT * from %s", name));
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT x, y from %s", name));
             parseDatasetFromResultSet(resultSet, dataset);
             resultSet.close();
         } catch (SQLException e) {
