@@ -107,7 +107,7 @@ public class MainMenuController {
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         DBManager.getInstance().getAuthService().logout();
 
-        stage.close(); // Close the current stage (window)
+         // Close the current stage (window)
     }
 
 

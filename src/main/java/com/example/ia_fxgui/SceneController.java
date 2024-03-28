@@ -103,6 +103,7 @@ public class SceneController {
             System.out.println("Login Successful");
             System.out.println(SceneController.class.getResource("MainMenu.fxml"));
             showWindow("MainMenu.fxml", false, true);
+            Main.WarningPopup.openPopup("Login Successful");
 
         } else {
             // Display an error message or handle unsuccessful login
@@ -142,7 +143,7 @@ public class SceneController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setFullScreen(!stage.isFullScreen());
+
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
