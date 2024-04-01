@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 
-import static com.example.ia_fxgui.SceneController.showWindow;
+import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
 
 public class EvaluationMenuController {
 
@@ -87,7 +87,7 @@ public class EvaluationMenuController {
     private void exitToMainMenu() {
         System.out.println("Exit to Main Menu button clicked.");
         try {
-            showWindow("MainMenu.fxml", false, true);
+            showWindowFromFxml("MainMenu.fxml", false, true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

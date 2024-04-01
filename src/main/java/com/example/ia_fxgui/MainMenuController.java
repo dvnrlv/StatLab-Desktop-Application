@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import static com.example.ia_fxgui.SceneController.showWindow;
+import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
 
 
 public class MainMenuController {
@@ -86,17 +86,15 @@ public class MainMenuController {
 
         System.out.println("Show Evaluate Menu");
         try {
-            showWindow("EvaluationMenu.fxml", false, true);
+            showWindowFromFxml("EvaluationMenu.fxml", false, true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void showDB() {
-        Stage stage = new Stage(); // Create a new stage (you can pass your existing stage if you have access to it)
-        SceneController.closeCurrentStage();
         try {
-            new DBDatasetListScene().start(stage);
+            SceneController.showWindowWithScene(new DBDatasetListScene(), false, true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -54,41 +54,38 @@ public class SceneController {
     }
 
 
-
     private static Stage currentStage = null;
 
-    public static void showWindow(String fxmlFile, boolean fullDisplay, boolean closePrevious) throws IOException {
+    public static void showWindowFromFxml(String fxmlFile, boolean fullDisplay, boolean closePrevious) throws IOException {
         try {
             // Load FXML file
             Parent root = FXMLLoader.load(SceneController.class.getResource(fxmlFile));
-
-            // Close the current stage if it's open
-            if (currentStage != null && closePrevious) {
-                currentStage.close();
-            }
-
-            // Create a new stage
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-
-            // Set fullscreen or resizable based on the parameter
-            if (fullDisplay) {
-                newStage.setFullScreen(!newStage.isFullScreen());
-            } else {
-                newStage.setResizable(false);
-            }
-
-            // Set the new stage as the current stage and show it
-            currentStage = newStage;
-            currentStage.show();
-
+            showWindowWithScene(new Scene(root), fullDisplay, closePrevious);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public static void showWindowWithScene(Scene scene, boolean fullDisplay, boolean closePrevious) {
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
 
+        // Close the current stage if it's open
+        if (currentStage != null && closePrevious) {
+            currentStage.close();
+        }
 
+        // Set fullscreen or resizable based on the parameter
+        if (fullDisplay) {
+            newStage.setFullScreen(!newStage.isFullScreen());
+        } else {
+            newStage.setResizable(false);
+        }
+
+        // Set the new stage as the current stage and show it
+        currentStage = newStage;
+        currentStage.show();
+    }
 
 
     @FXML
@@ -102,7 +99,7 @@ public class SceneController {
             ((Stage) usernameField.getScene().getWindow()).close();
             System.out.println("Login Successful");
             System.out.println(SceneController.class.getResource("MainMenu.fxml"));
-            showWindow("MainMenu.fxml", false, true);
+            showWindowFromFxml("MainMenu.fxml", false, true);
             Main.WarningPopup.openPopup("Login Successful");
 
         } else {
@@ -149,6 +146,7 @@ public class SceneController {
             e.printStackTrace();
         }
     }
+
     private static Scene currentScene;
 
     // Setter methods to set the current Stage and Scene
@@ -183,7 +181,7 @@ public class SceneController {
 
 
     @FXML
-    public static void exitApplication(ActionEvent event){
+    public static void exitApplication(ActionEvent event) {
         Platform.exit();
     }
 
@@ -192,11 +190,7 @@ public class SceneController {
     }
 
 
-
     // Method to exit the application
-
-
-
 
 
 }

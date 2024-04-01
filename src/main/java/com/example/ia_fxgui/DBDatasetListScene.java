@@ -5,31 +5,69 @@ import com.example.ia_fxgui.db.SqlRowNotFoundException;
 import com.example.ia_fxgui.services.DatasetStorage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static com.example.ia_fxgui.SceneController.showWindow;
+import static com.example.ia_fxgui.SceneController.closeCurrentStage;
+import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
 
-public class DBDatasetListScene {
-    static class XCell extends ListCell<String> {
+public class DBDatasetListScene extends Scene {
+
+    private static final double WIDTH = 600;
+    private static final double HEIGHT = 400;
+
+    private Button exitToMenuButton = new Button("Exit to Main Menu");
+
+    public DBDatasetListScene() {
+        super(new BorderPane(), WIDTH, HEIGHT);
+
+        BorderPane root = (BorderPane) getRoot();
+        ObservableList<String> datasetsNames = FXCollections.observableArrayList(
+                DBManager.getInstance().getDatasetService().findLoggedUserDatasetsNames()
+        );
+
+        ListView<String> datasetsCellList = new ListView<>(datasetsNames);
+        datasetsCellList.setCellFactory(param -> new DatasetCell());
+
+        // Place the ListView in the center of the BorderPane
+        root.setCenter(datasetsCellList);
+
+        // Move the exitToMenuButton to the bottom-right corner
+        root.setBottom(exitToMenuButton);
+        BorderPane.setMargin(exitToMenuButton, new Insets(10));
+        BorderPane.setAlignment(exitToMenuButton, Pos.BOTTOM_RIGHT);
+
+        exitToMenuButton.setStyle("-fx-background-color: #5698db");
+        exitToMenuButton.setOnMouseClicked(mouseEvent -> {
+                    try {
+                        showWindowFromFxml("MainMenu.fxml", false, true);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+        );
+    }
+
+    static class DatasetCell extends ListCell<String> {
         String datasetName;
         HBox hbox = new HBox();
-        Label label = new Label("(empty)");
+        Label label = new Label("_Dataset_Name_");
         Pane pane = new Pane();
         Button button = new Button("Evaluate");
         String lastItem;
 
-        public XCell() {
+        public DatasetCell() {
             super();
             hbox.getChildren().addAll(label, pane, button);
             HBox.setHgrow(pane, Priority.ALWAYS);
@@ -41,18 +79,20 @@ public class DBDatasetListScene {
                 }
 
                 try {
-                    showWindow("EvaluationMenu.fxml", false, true);
+                    showWindowFromFxml("EvaluationMenu.fxml", false, true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
+
+            button.setStyle("-fx-background-color: #e67a22");
         }
 
         @Override
         protected void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
             datasetName = item;
-            setText(null);  // No text in label of super class
+            setText(null);
             if (empty) {
                 lastItem = null;
                 setGraphic(null);
@@ -62,22 +102,5 @@ public class DBDatasetListScene {
                 setGraphic(hbox);
             }
         }
-    }
-
-    public void start(Stage primaryStage) {
-        StackPane pane = new StackPane();
-        Scene scene = new Scene(pane, 600, 400);
-
-        primaryStage.setScene(scene);
-
-        ObservableList<String> datasetsNames = FXCollections.observableArrayList(
-                DBManager.getInstance().getDatasetService().findLoggedUserDatasetsNames()
-        );
-
-        ListView<String> lv = new ListView<>(datasetsNames);
-        lv.setCellFactory(param -> new XCell());
-
-        pane.getChildren().add(lv);
-        primaryStage.show();
     }
 }
