@@ -53,7 +53,7 @@ public class CSVFileParser {
         }
 
         parsedDataSet = dataSet;
-
+        DatasetStorage.setDataset(parsedDataSet, datasetName);
         return dataSet;
 
     }

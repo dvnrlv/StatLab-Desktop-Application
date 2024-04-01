@@ -115,7 +115,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
     @Override
     public Dataset findDatasetByName(String name) throws SqlRowNotFoundException {
         if (!checkIfDatasetWithNameExist(name)) {
-            throw new SqlRowNotFoundException("No dataset with provided");
+            throw new SqlRowNotFoundException("No dataset with provided name");
         }
 
         Dataset dataset = new Dataset(name, DBManager.getInstance().getAuthService().getLoggedUserName());
