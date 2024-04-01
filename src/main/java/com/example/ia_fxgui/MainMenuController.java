@@ -1,4 +1,5 @@
 package com.example.ia_fxgui;
+
 import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.services.CSVFileParser;
 import javafx.fxml.FXML;
@@ -92,8 +93,13 @@ public class MainMenuController {
     }
 
     private void showDB() {
-        // Code to show the DB stage or window
-        System.out.println("Show DB");
+        Stage stage = new Stage(); // Create a new stage (you can pass your existing stage if you have access to it)
+        SceneController.closeCurrentStage();
+        try {
+            new DBDatasetListScene().start(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showGuide() {
@@ -107,9 +113,8 @@ public class MainMenuController {
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         DBManager.getInstance().getAuthService().logout();
 
-         // Close the current stage (window)
+        // Close the current stage (window)
     }
-
 
 
 }
