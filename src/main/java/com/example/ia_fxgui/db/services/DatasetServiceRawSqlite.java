@@ -6,8 +6,13 @@ import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.db.models.Point;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DatasetServiceRawSqlite implements DatasetService {
     public DatasetServiceRawSqlite() {
@@ -16,7 +21,8 @@ public class DatasetServiceRawSqlite implements DatasetService {
             statement.execute("CREATE TABLE IF NOT EXISTS datasets" +
                     "(" +
                     "    name PRIMARY KEY," +
-                    "    owner TEXT" +
+                    "    owner TEXT," +
+                    "    date TIMESTAMP" +
                     ");");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -26,9 +32,10 @@ public class DatasetServiceRawSqlite implements DatasetService {
     @Override
     public void saveDataset(Dataset dataset) {
         try (Connection connection = DBManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT OR IGNORE INTO datasets values (?, ?)")) {
+             PreparedStatement statement = connection.prepareStatement("INSERT OR IGNORE INTO datasets values (?, ?, ?)")) {
             statement.setString(1, dataset.getName());
             statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUserName());
+            statement.setString(3, LocalDate.now().toString());
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -118,28 +125,55 @@ public class DatasetServiceRawSqlite implements DatasetService {
             throw new SqlRowNotFoundException("No dataset with provided name");
         }
 
-        Dataset dataset = new Dataset(name, DBManager.getInstance().getAuthService().getLoggedUserName());
-        try (Connection connection = DBManager.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(String.format("SELECT x, y from %s", name));
-            parseDatasetFromResultSet(resultSet, dataset);
-            resultSet.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String owner = DBManager.getInstance().getAuthService().getLoggedUserName();
+        Dataset dataset = new Dataset(name, owner);
+        dataset.setPoints(getDatasetPoints(name));
+        dataset.setDate(getDatasetDate(name, owner));
 
         return dataset;
     }
 
-    private static void parseDatasetFromResultSet(ResultSet resultSet, Dataset dataset) throws SQLException {
+    private static List<Point> getDatasetPoints(String name) {
+        try (Connection connection = DBManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT x, y from %s", name));
+            List<Point> points = parseDatasetFromResultSet(resultSet);
+            resultSet.close();
+            return points;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Date getDatasetDate(String name, String owner) {
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT date from datasets WHERE name=? and owner=?")) {
+            statement.setString(1, name);
+            statement.setString(2, owner);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            return formatter.parse(resultSet.getString("date"));
+        } catch (SQLException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static List<Point> parseDatasetFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Point> points = new ArrayList<>();
         while (resultSet.next()) {
-            dataset.getPoints().add(
+            points.add(
                     new Point(
                             resultSet.getLong("x"),
                             resultSet.getLong("y")
                     )
             );
         }
+        return points;
     }
 
     @Override
@@ -147,7 +181,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
         try (Connection connection = DBManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(
                      "SELECT * FROM datasets WHERE name=? and owner=?"
-             );
+             )
         ) {
             statement.setString(1, name);
             statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUserName());

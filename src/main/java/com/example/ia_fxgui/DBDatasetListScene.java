@@ -8,16 +8,16 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
 
@@ -27,10 +27,10 @@ public class DBDatasetListScene extends Scene {
     private static final double HEIGHT = 400;
 
     private Button exitToMenuButton = new Button("Exit to Main Menu");
+    TableView<TableRow<String>> tb;
 
     public DBDatasetListScene() {
         super(new BorderPane(), WIDTH, HEIGHT);
-
         BorderPane root = (BorderPane) getRoot();
         ObservableList<String> datasetsNames = FXCollections.observableArrayList(
                 DBManager.getInstance().getDatasetService().findLoggedUserDatasetsNames()
@@ -63,17 +63,38 @@ public class DBDatasetListScene extends Scene {
         HBox hbox = new HBox();
         Label label = new Label("_Dataset_Name_");
         Pane pane = new Pane();
+        Label dateLabel = new Label("_Date_");
         Button evalButton = new Button("Evaluate");
         Button deleteButton = new Button("Delete");
         String lastItem;
 
         public DatasetCell() {
             super();
-            hbox.getChildren().addAll(label, pane, evalButton, deleteButton);
+            hbox.getChildren().addAll(label, dateLabel, pane, evalButton, deleteButton);
+            hbox.setAlignment(Pos.CENTER);
             HBox.setHgrow(pane, Priority.ALWAYS);
+            HBox.setMargin(label, new Insets(0, 10, 0, 0));
+            HBox.setMargin(dateLabel, new Insets(0, 10, 0, 0));
+            HBox.setMargin(evalButton, new Insets(5, 10, 5, 10));
+            HBox.setMargin(deleteButton, new Insets(5, 0, 5, 10));
+        }
 
+        private void setupOrUpdateChildren() {
+            setupDateLabel();
             setupEvalBtn();
             setupDeleteBtn();
+        }
+
+        private void setupDateLabel() {
+            try {
+                Date date = DBManager.getInstance().getDatasetService().findDatasetByName(datasetName).getDate();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                dateLabel.setText(
+                        formatter.format(date)
+                );
+            } catch (SqlRowNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         private void setupEvalBtn() {
@@ -115,6 +136,7 @@ public class DBDatasetListScene extends Scene {
                 lastItem = null;
                 setGraphic(null);
             } else {
+                setupOrUpdateChildren();
                 lastItem = item;
                 label.setText(item != null ? item : "<null>");
                 setGraphic(hbox);
