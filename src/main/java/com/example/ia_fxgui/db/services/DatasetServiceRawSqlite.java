@@ -53,8 +53,8 @@ public class DatasetServiceRawSqlite implements DatasetService {
     }
 
     private static void savePoints(Dataset dataset) {
-        dropPointsTable(dataset);
-        createPointsTable(dataset);
+        dropPointsTable(dataset.getName());
+        createPointsTable(dataset.getName());
         insertPointsIntoTable(dataset);
     }
 
@@ -70,7 +70,7 @@ public class DatasetServiceRawSqlite implements DatasetService {
         }
     }
 
-    private static void createPointsTable(Dataset dataset) {
+    private static void createPointsTable(String name) {
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
             String statementText = String.format("CREATE TABLE IF NOT EXISTS %s" +
@@ -78,17 +78,17 @@ public class DatasetServiceRawSqlite implements DatasetService {
                     "    id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "    x REAL," +
                     "    y REAL" +
-                    ");", dataset.getName());
+                    ");", name);
             statement.execute(statementText);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void dropPointsTable(Dataset dataset) {
+    private static void dropPointsTable(String name) {
         try (Connection connection = DBManager.getConnection();
              Statement statement = connection.createStatement()) {
-            String statementText = String.format("DROP TABLE IF EXISTS %s;", dataset.getName());
+            String statementText = String.format("DROP TABLE IF EXISTS %s;", name);
             statement.execute(statementText);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -155,6 +155,30 @@ public class DatasetServiceRawSqlite implements DatasetService {
             boolean doesExist = resultSet.next();
             resultSet.close();
             return doesExist;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void removeDatasetByName(String name) throws SqlRowNotFoundException {
+        if (!checkIfDatasetWithNameExist(name)) {
+            throw new SqlRowNotFoundException("No dataset with provided name");
+        }
+
+        dropPointsTable(name);
+        removeDatasetFromUser(name);
+    }
+
+    private void removeDatasetFromUser(String datasetName) {
+        try (Connection connection = DBManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "DELETE FROM datasets WHERE name=? and owner=?"
+             );
+        ) {
+            statement.setString(1, datasetName);
+            statement.setString(2, DBManager.getInstance().getAuthService().getLoggedUserName());
+            statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

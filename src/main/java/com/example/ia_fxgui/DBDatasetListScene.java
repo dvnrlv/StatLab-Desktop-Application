@@ -19,7 +19,6 @@ import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 
-import static com.example.ia_fxgui.SceneController.closeCurrentStage;
 import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
 
 public class DBDatasetListScene extends Scene {
@@ -64,14 +63,21 @@ public class DBDatasetListScene extends Scene {
         HBox hbox = new HBox();
         Label label = new Label("_Dataset_Name_");
         Pane pane = new Pane();
-        Button button = new Button("Evaluate");
+        Button evalButton = new Button("Evaluate");
+        Button deleteButton = new Button("Delete");
         String lastItem;
 
         public DatasetCell() {
             super();
-            hbox.getChildren().addAll(label, pane, button);
+            hbox.getChildren().addAll(label, pane, evalButton, deleteButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            button.setOnAction(event -> {
+
+            setupEvalBtn();
+            setupDeleteBtn();
+        }
+
+        private void setupEvalBtn() {
+            evalButton.setOnAction(event -> {
                 try {
                     DatasetStorage.setDataset(DBManager.getInstance().getDatasetService().findDatasetByName(datasetName));
                 } catch (SqlRowNotFoundException e) {
@@ -85,7 +91,19 @@ public class DBDatasetListScene extends Scene {
                 }
             });
 
-            button.setStyle("-fx-background-color: #e67a22");
+            evalButton.setStyle("-fx-background-color: #e67a22");
+        }
+
+        private void setupDeleteBtn() {
+            deleteButton.setOnAction(event -> {
+                try {
+                    DBManager.getInstance().getDatasetService().removeDatasetByName(datasetName);
+                } catch (SqlRowNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            deleteButton.setStyle("-fx-background-color: #e67a22");
         }
 
         @Override
