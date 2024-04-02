@@ -1,6 +1,7 @@
 package com.example.ia_fxgui.services;
 
 
+import com.example.ia_fxgui.Main;
 import com.example.ia_fxgui.db.DBManager;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -103,6 +104,7 @@ public class PDFCreator {
                     }
                 } else {
                     System.out.println("File does not exist.");
+                    Main.WarningPopup.openPopup("Saved File does not exist.");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

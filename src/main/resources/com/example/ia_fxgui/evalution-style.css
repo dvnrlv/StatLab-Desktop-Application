@@ -21,7 +21,7 @@
 }
 
 .label {
-    -fx-text-fill: #ecf0f1;
+    -fx-text-fill: #031d24;
     -fx-font-size: 16px;
 }
 
@@ -45,6 +45,10 @@
 
 .text-field:focused {
     -fx-border-color: #3498db;
+}
+
+.choice-box .list-cell {
+    -fx-text-fill: black;
 }
 
 

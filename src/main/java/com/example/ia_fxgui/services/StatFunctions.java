@@ -213,6 +213,7 @@ public class StatFunctions {
 
     private static void clearStats() {
         stats.clear();
+        resultStatArray = null;
     }
 
 }

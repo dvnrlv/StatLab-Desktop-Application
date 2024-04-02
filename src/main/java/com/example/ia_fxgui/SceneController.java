@@ -8,15 +8,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class SceneController {
 
@@ -154,9 +158,7 @@ public class SceneController {
         currentStage = stage;
     }
 
-    public static void setCurrentScene(Scene scene) {
-        currentScene = scene;
-    }
+
 
     public static void closeCurrentStage() {
         if (currentStage != null) {
@@ -177,6 +179,42 @@ public class SceneController {
         stage = (Stage) scenePane.getScene().getWindow();
         System.out.println("You successfully logged out");
         stage.close();
+    }
+
+    @FXML
+    private TextArea textArea;
+
+    public static void downloadAndDisplayGuide() {
+        try {
+            URL resourceUrl = SceneController.class.getResource("guide.txt");
+            if (resourceUrl != null) {
+                InputStream inputStream = resourceUrl.openStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line).append("\n");
+                }
+                reader.close();
+
+                // Create a new stage to display the guide text
+                Stage guideStage = new Stage();
+                TextArea guideTextArea = new TextArea();
+                guideTextArea.setEditable(false);
+                guideTextArea.setText(stringBuilder.toString());
+
+                VBox root = new VBox(guideTextArea);
+                VBox.setVgrow(guideTextArea, javafx.scene.layout.Priority.ALWAYS); // Ensure TextArea grows vertically
+                Scene scene = new Scene(root, 600, 400);
+                guideStage.setScene(scene);
+                guideStage.setTitle("Guide");
+                guideStage.show();
+            } else {
+                System.err.println("Resource not found.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

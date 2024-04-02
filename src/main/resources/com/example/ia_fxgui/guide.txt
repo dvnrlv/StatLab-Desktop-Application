@@ -1,0 +1,51 @@
+Guide: Uploading Experimental Dataset and Evaluation Menu with StatLab
+
+
+Welcome to StatLab, our platform for analyzing experimental data! Below is a comprehensive guide to help you upload your experimental dataset and utilize the Evaluation Menu to analyze it effectively:
+
+
+Uploading Experimental Dataset:
+
+
+Begin by navigating to the "Evaluate Experimental Data Set" section within the StatLab application and click on the corresponding button.
+You will be prompted to upload your experimental dataset in CSV format. Ensure that your dataset follows the guidelines provided:
+Data should be organized with independent variable values in the first column and dependent variable values in the second column.
+Remove any headers or additional information above the data.
+Once you have selected your CSV file, proceed to upload it to our system.
+Evaluation Menu:
+
+
+After successfully uploading your dataset, you will be directed to the Evaluation Menu within the StatLab application.
+Here, you can select from a variety of statistical functions and graphing options to analyze your experimental data set.
+Select Statistical Functions:
+
+
+Choose the statistical functions you wish to calculate in relation to your experimental data set. Options may include mean, median, standard deviation, correlation coefficient, etc.
+Graphing Options:
+
+
+Opt to graph your experimental data set alongside various visualization elements:
+The curve of best fit calculated based on the selected statistical model or method.
+An optional user-inputted theoretical dependency curve, if provided.
+You can export the graph to Desmos or generate a PDF report containing the graph and statistical analysis results.
+Performing Analysis:
+
+
+Initiate the analysis process after selecting your desired statistical functions and graphing options.
+Our system will process your experimental data set accordingly and generate a summary report containing the results of your analysis.
+Reviewing Results:
+
+
+Carefully review the statistical analysis results and graphical representation of your data provided in the summary report.
+The insights gained from the analysis can offer valuable information about the characteristics and relationships within your experimental data set.
+Further Actions:
+
+
+Depending on your analysis requirements and preferences, you may:
+Refine your analysis by adjusting the selected statistical functions or graphing options.
+Export the results for inclusion in reports or presentations.
+Seek assistance or guidance from our support team for any questions or concerns.
+By following these guidelines, you can efficiently upload your experimental dataset and utilize the Evaluation Menu within the StatLab application to analyze it comprehensively. Should you encounter any difficulties or have questions during the process, please don't hesitate to reach out to our support team for assistance.
+
+
+Thank you for choosing StatLab for your data analysis needs!

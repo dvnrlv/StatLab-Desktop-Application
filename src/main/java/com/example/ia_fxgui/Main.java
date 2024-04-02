@@ -69,7 +69,7 @@ public class Main extends Application {
 
             // Set scene and show the popup window
             popupStage.setScene(new Scene(vBox, 250, 150));
-            popupStage.setTitle("Warning");
+            popupStage.setTitle("Message from Application");
 
             try {
                 Scene scene = popupStage.getScene();

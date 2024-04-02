@@ -10,13 +10,25 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@evalution-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.EvaluationMenuController">
+<BorderPane maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="600.0"
+            prefWidth="900.0"
+            stylesheets="@evalution-style.css"
+            xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ia_fxgui.EvaluationMenuController">
+
     <center>
         <SplitPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
@@ -43,10 +55,10 @@
                                                       <Separator orientation="VERTICAL" prefHeight="200.0" />
                                                                         <VBox layoutX="1.0" layoutY="42.0" prefHeight="413.0" prefWidth="231.0">
                                                                             <children>
-                                                                                <CheckBox fx:id="statPearson" mnemonicParsing="false" prefHeight="28.0" prefWidth="226.0" text="Pearson's Correlation" />
-                                                                                <CheckBox fx:id="statKendall" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Kendall's correlation" />
-                                                                                <CheckBox fx:id="statSpearman" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Spearman's correlation" />
-                                                                                <CheckBox fx:id="statCovariance" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Covariance" />
+                                                                                <CheckBox fx:id="statPearson" mnemonicParsing="false" prefHeight="44.0" prefWidth="226.0" text="Pearson's Correlation" />
+                                                                                <CheckBox fx:id="statKendall" mnemonicParsing="false" prefHeight="53.0" prefWidth="226.0" text="Kendall's Correlation" />
+                                                                                <CheckBox fx:id="statSpearman" mnemonicParsing="false" prefHeight="52.0" prefWidth="226.0" text="Spearman's Correlation" />
+                                                                                <CheckBox fx:id="statCovariance" mnemonicParsing="false" prefHeight="53.0" prefWidth="226.0" text="Covariance" />
                                                                                 <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
                                                                                 <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
                                                                                 <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
@@ -55,7 +67,7 @@
                                                                                 <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
                                                                             </children>
                                                                         </VBox>
-                                                                        <ChoiceBox fx:id="polynomialChoiceBox" layoutX="150.0" layoutY="1.0" prefHeight="39.0" prefWidth="42.0" />
+                                                      <ChoiceBox fx:id="polynomialChoiceBox" layoutX="150.0" prefHeight="41.0" prefWidth="44.0" style="-fx-text-fill: black;" />
                                                                     </children>
                                                                 </AnchorPane>
                                                             </content>
@@ -143,6 +155,12 @@
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="642.0">
                                                                     <children>
                                                                         <ListView fx:id="resultListView" layoutX="-1.0" layoutY="-2.0" prefHeight="374.0" prefWidth="644.0" />
+                                                      <TableView fx:id="resultStatArrayTable" prefHeight="298.0" prefWidth="633.0">
+                                                        <columns>
+                                                          <TableColumn fx:id="resultStatArrayString" prefWidth="331.0" text="C1" />
+                                                          <TableColumn fx:id="resultStatArrayDouble" prefWidth="301.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
                                                                     </children>
                                                                 </AnchorPane>
                                                             </content>

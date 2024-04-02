@@ -48,8 +48,20 @@ public class MainMenuController {
             // Wire up event handlers for buttons
             showEvaluateMenu.setOnMouseClicked(event -> showEvaluateMenu());
             showDB.setOnAction(event -> showDB());
-            showGuide.setOnAction(event -> showGuide());
-            logOutButton.setOnAction(event -> logOut());
+            showGuide.setOnAction(event -> {
+                try {
+                    showGuide();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            logOutButton.setOnAction(event -> {
+                try {
+                    logOut();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 
@@ -79,20 +91,29 @@ public class MainMenuController {
                 e.printStackTrace();
                 // Handle the exception as needed
             }
-        } else {
-            System.out.println("No file selected.");
-            Main.WarningPopup.openPopup("No file selected.");
+            System.out.println("Show Evaluate Menu");
+            try {
+                showWindowFromFxml("EvaluationMenu.fxml", false, true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        System.out.println("Show Evaluate Menu");
-        try {
-            showWindowFromFxml("EvaluationMenu.fxml", false, true);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        else {
+            System.out.println("No file selected.");
+            try {
+                showWindowFromFxml("MainMenu.fxml", false, true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Main.WarningPopup.openPopup("No file selected.");
+
         }
     }
 
     private void showDB() {
+        Stage stage = new Stage(); // Create a new stage (you can pass your existing stage if you have access to it)
+        SceneController.closeCurrentStage();
         try {
             SceneController.showWindowWithScene(new DBDatasetListScene(), false, true);
         } catch (Exception e) {
@@ -100,17 +121,17 @@ public class MainMenuController {
         }
     }
 
-    private void showGuide() {
+    private void showGuide() throws IOException {
         // Code to show the guide stage or window
         System.out.println("Show Guide");
+        // Download and display the guide text
+        SceneController.downloadAndDisplayGuide();
     }
 
-    private void logOut() {
+    private void logOut() throws IOException {
         // Code to log out the user
         System.out.println("Log Out");
-        Stage stage = (Stage) logOutButton.getScene().getWindow();
-        DBManager.getInstance().getAuthService().logout();
-
+        showWindowFromFxml("LogInScene.fxml", false, true);
         // Close the current stage (window)
     }
 
