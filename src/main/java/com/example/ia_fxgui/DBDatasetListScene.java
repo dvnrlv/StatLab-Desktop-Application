@@ -122,6 +122,7 @@ public class DBDatasetListScene extends Scene {
                 } catch (SqlRowNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+                getListView().getItems().remove(getItem());
             });
 
             deleteButton.setStyle("-fx-background-color: #e67a22");
