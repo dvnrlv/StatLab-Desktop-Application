@@ -12,6 +12,6 @@ public class DatasetStorage {
     }
 
     public static void setDataset(Double[][] points, String name) {
-
+        dataset = new Dataset(name, points);
     }
 }
