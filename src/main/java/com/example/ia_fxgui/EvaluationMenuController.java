@@ -62,7 +62,7 @@ public class EvaluationMenuController {
     private Button exitToMenu;
 
     @FXML
-    private LineChart<String, Number> resultLineChart;
+    private LineChart <Number, Number> resultLineChart;
 
     @FXML
     private Button showLargerChart;
@@ -108,6 +108,7 @@ public class EvaluationMenuController {
     private void calculateAndGraph() {
         System.out.println("Calculate and Graph button clicked.");
         // Add logic to calculate and graph data
+
 
         //display resultStatArray and LineChart
 
