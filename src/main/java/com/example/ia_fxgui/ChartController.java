@@ -10,7 +10,7 @@ public class ChartController {
     private LineChart<String, Number> chart;
 
     public void initializeChart(LineChart<?, ?> lineChart) {
-        this.chart.setData(lineChart.getData());
+        //this.chart.setData(lineChart.getData());
         this.chart.setTitle(lineChart.getTitle());
         // You can set other properties as needed
     }

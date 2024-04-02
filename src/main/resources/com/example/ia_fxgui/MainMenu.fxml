@@ -18,9 +18,9 @@
         <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="383.0">
                 <children>
-                    <Label fx:id="welcomeText1" layoutX="14.0" layoutY="35.0" text="StatLab @ 2024">
+                    <Label fx:id="welcomeText1" layoutX="14.0" layoutY="35.0" text="StatLab © 2024">
                         <font>
-                            <Font size="34.0" />
+                            <Font size="30.0" />
                         </font>
                     </Label>
                 </children>

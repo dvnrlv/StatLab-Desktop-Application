@@ -4,6 +4,9 @@ package com.example.ia_fxgui;
 import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.services.CSVFileParser;
+import com.example.ia_fxgui.services.DatasetStorage;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,8 +76,6 @@ public class EvaluationMenuController {
     @FXML
     private ListView<String> resultListView;
 
-
-
     @FXML
     public void initialize() {
         // Initialize ChoiceBox
@@ -88,6 +89,9 @@ public class EvaluationMenuController {
         producePDF.setOnAction(event -> saveAsPDF());
         polynomialChoiceBox.getItems().addAll(polynomialChoiceBoxOptions);
         polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
+        filenameDisplay.setText(DatasetStorage.getDataset().getName());
+
+
 
     }
 
@@ -164,6 +168,32 @@ public class EvaluationMenuController {
     private void saveAsPDF() {
         System.out.println("Save as PDF button clicked.");
         // Add logic to save data as PDF
+    }
+
+    public void populateTable(Object[][] data) {
+        resultStatArrayTable.getItems().clear(); // Clear existing items
+        resultStatArrayTable.getItems().addAll(data); // Add new items
+
+        // Set cell value factories after populating the table
+        resultStatArrayString.setCellValueFactory(cellData -> {
+            if (cellData.getValue() != null && cellData.getValue().length > 0) {
+                Object value = cellData.getValue()[0];
+                if (value != null) {
+                    return javafx.beans.property.SimpleStringProperty.valueOf(value.toString());
+                }
+            }
+            return javafx.beans.property.SimpleStringProperty.valueOf("");
+        });
+
+        resultStatArrayDouble.setCellValueFactory(cellData -> {
+            if (cellData.getValue() != null && cellData.getValue().length > 1) {
+                Object value = cellData.getValue()[1];
+                if (value != null) {
+                    return javafx.beans.property.SimpleDoubleProperty.valueOf(Double.parseDouble(value.toString()));
+                }
+            }
+            return javafx.beans.property.SimpleDoubleProperty.valueOf(0.0);
+        });
     }
 
 

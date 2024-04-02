@@ -18,16 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity"
-            maxWidth="-Infinity"
-            minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="600.0"
-            prefWidth="900.0"
-            stylesheets="@evalution-style.css"
-            xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.ia_fxgui.EvaluationMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@evalution-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ia_fxgui.EvaluationMenuController">
 
     <center>
         <SplitPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -155,10 +146,10 @@
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="642.0">
                                                                     <children>
                                                                         <ListView fx:id="resultListView" layoutX="-1.0" layoutY="-2.0" prefHeight="374.0" prefWidth="644.0" />
-                                                      <TableView fx:id="resultStatArrayTable" prefHeight="298.0" prefWidth="633.0">
+                                                      <TableView fx:id="resultStatArrayTable" layoutX="2.0" prefHeight="368.0" prefWidth="626.0">
                                                         <columns>
-                                                          <TableColumn fx:id="resultStatArrayString" prefWidth="331.0" text="C1" />
-                                                          <TableColumn fx:id="resultStatArrayDouble" prefWidth="301.0" text="C2" />
+                                                          <TableColumn fx:id="resultStatArrayString" prefWidth="331.0" text="Statistical Function" />
+                                                          <TableColumn fx:id="resultStatArrayDouble" prefWidth="301.0" text="Calculated Value" />
                                                         </columns>
                                                       </TableView>
                                                                     </children>
