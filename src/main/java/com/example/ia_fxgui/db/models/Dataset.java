@@ -58,7 +58,7 @@ public class Dataset {
         this.points = points;
     }
 
-    public Double[][] getPointsArray() {
+    public double[][] getPointsArray() {
         Double[][] result = new Double[points.size()][2];
         for (int i = 0; i < result.length; i++) {
             result[i][0] = points.get(0).x();

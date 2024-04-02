@@ -5,6 +5,8 @@ import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.services.CSVFileParser;
 import com.example.ia_fxgui.services.DatasetStorage;
+import com.example.ia_fxgui.services.Grapher;
+import com.example.ia_fxgui.services.StatFunctions;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -77,6 +79,9 @@ public class EvaluationMenuController {
     private ListView<String> resultListView;
 
     @FXML
+    private TextField modelInput;
+
+    @FXML
     public void initialize() {
         // Initialize ChoiceBox
 
@@ -91,25 +96,33 @@ public class EvaluationMenuController {
         polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
         filenameDisplay.setText(DatasetStorage.getDataset().getName());
 
-
-
     }
 
 
     // Event handlers
 
 
+    private static int selectedPolynomialValue = 0;
+
     public void getPolynomialDegree(ActionEvent event) {
-        int selectedValue = polynomialChoiceBox.getValue(); // This will automatically unbox to int
-        System.out.println("Selected value: " + selectedValue);
+        selectedPolynomialValue = polynomialChoiceBox.getValue(); // This will automatically unbox to int
+        System.out.println("Selected value: " + selectedPolynomialValue);
     }
 
 
     private void calculateAndGraph() {
         System.out.println("Calculate and Graph button clicked.");
         // Add logic to calculate and graph data
+        String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue,DatasetStorage.getDataset().getPointsArray());
 
 
+        String model;
+        if(modelInput.toString()!="" && modelInput.toString()!=null){
+            model = modelInput.toString();
+        }else{
+            model=null;
+        }
+        resultLineChart=Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(),"x","y",bestFit,model,DatasetStorage.getDataset().getName());
         //display resultStatArray and LineChart
 
 
@@ -170,33 +183,6 @@ public class EvaluationMenuController {
         System.out.println("Save as PDF button clicked.");
         // Add logic to save data as PDF
     }
-
-    public void populateTable(Object[][] data) {
-        resultStatArrayTable.getItems().clear(); // Clear existing items
-        resultStatArrayTable.getItems().addAll(data); // Add new items
-
-        // Set cell value factories after populating the table
-        resultStatArrayString.setCellValueFactory(cellData -> {
-            if (cellData.getValue() != null && cellData.getValue().length > 0) {
-                Object value = cellData.getValue()[0];
-                if (value != null) {
-                    return javafx.beans.property.SimpleStringProperty.valueOf(value.toString());
-                }
-            }
-            return javafx.beans.property.SimpleStringProperty.valueOf("");
-        });
-
-        resultStatArrayDouble.setCellValueFactory(cellData -> {
-            if (cellData.getValue() != null && cellData.getValue().length > 1) {
-                Object value = cellData.getValue()[1];
-                if (value != null) {
-                    return javafx.beans.property.SimpleDoubleProperty.valueOf(Double.parseDouble(value.toString()));
-                }
-            }
-            return javafx.beans.property.SimpleDoubleProperty.valueOf(0.0);
-        });
-    }
-
 
 
 

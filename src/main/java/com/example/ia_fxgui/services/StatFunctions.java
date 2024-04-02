@@ -15,9 +15,6 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 
 public class StatFunctions {
@@ -116,6 +113,8 @@ public class StatFunctions {
 
 
     public static String fitPolynomial(int n, double[][] csvData) {
+
+        if(n!=0){
         WeightedObservedPoints obs = new WeightedObservedPoints();
         for (double[] row : csvData) {
             obs.add(row[0], row[1]); // Assuming X values are in the first column, Y values in the second
@@ -126,7 +125,10 @@ public class StatFunctions {
 
         PolynomialFunction polynomialFunction = new PolynomialFunction(roundCoefficients(coeffs));
 
-        return polynomialToString(polynomialFunction);
+        return polynomialToString(polynomialFunction);}
+        else{
+            return null;
+        }
     }
 
     public static void createResultArray(String fileName) {

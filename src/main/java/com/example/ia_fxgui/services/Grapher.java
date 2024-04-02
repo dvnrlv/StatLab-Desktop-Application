@@ -14,7 +14,7 @@ public class Grapher {
 
  //with model and best fit
 
-    static LineChart<Number, Number> displayDataSet(Double[][] dataset, String xAxisName, String yAxisName, String bestFit, String model, String fileName) {
+    public static LineChart<Number, Number> displayDataSet(double[][] dataset, String xAxisName, String yAxisName, String bestFit, String model, String fileName) {
 
         fileName = fileName.replace(".csv", "");
 
@@ -102,7 +102,7 @@ public class Grapher {
 
 
 
-    static void saveChartAsImage(LineChart<Number, Number> chart, String fileName) {
+    public static void saveChartAsImage(LineChart<Number, Number> chart, String fileName) {
         try {
             fileName = fileName.replace(".csv","");
             // Convert the chart to a buffered image
