@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,6 +15,7 @@ import java.util.List;
 public class Dataset {
     private String name;
     private String owner;
+    private Date date;
     private List<Point> points;
 
     public Dataset(String name) {
@@ -50,5 +52,9 @@ public class Dataset {
     public void setPoints(Double[][] points) {
         this.points.clear();
         addPoints(points);
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
     }
 }

@@ -13,4 +13,6 @@ public interface DatasetService {
     Dataset findDatasetByName(String name) throws SqlRowNotFoundException;
 
     boolean checkIfDatasetWithNameExist(String name);
+
+    void removeDatasetByName(String name) throws SqlRowNotFoundException;
 }
