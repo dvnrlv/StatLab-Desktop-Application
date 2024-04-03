@@ -280,7 +280,5 @@ public class EvaluationMenuController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
     }
-
-
 }
 

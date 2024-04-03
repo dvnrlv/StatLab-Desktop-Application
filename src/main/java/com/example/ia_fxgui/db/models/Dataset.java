@@ -61,8 +61,8 @@ public class Dataset {
     public Double[][] getPointsArray() {
         Double[][] result = new Double[points.size()][2];
         for (int i = 0; i < result.length; i++) {
-            result[i][0] = points.get(0).x();
-            result[i][1] = points.get(0).y();
+            result[i][0] = points.get(i).x();
+            result[i][1] = points.get(i).y();
         }
         return result;
     }
