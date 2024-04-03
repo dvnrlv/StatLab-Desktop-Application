@@ -36,7 +36,7 @@
                                                         <TextField id="chooseStatText" fx:id="chooseStatText" editable="false" layoutX="-2.0" prefHeight="39.0" prefWidth="211.0" text="Choose Statistical Functions" />
                                                         <ScrollPane layoutX="-1.0" layoutY="39.0" prefHeight="256.0" prefWidth="212.0">
                                                             <content>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="193.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="273.0">
                                                                     <children>
                                                                         <TextField editable="false" layoutY="1.0" prefHeight="39.0" prefWidth="152.0" text="Best Fit Polynomial">
                                                                             <font>
@@ -50,12 +50,10 @@
                                                                                 <CheckBox fx:id="statKendall" mnemonicParsing="false" prefHeight="53.0" prefWidth="226.0" text="Kendall's Correlation" />
                                                                                 <CheckBox fx:id="statSpearman" mnemonicParsing="false" prefHeight="52.0" prefWidth="226.0" text="Spearman's Correlation" />
                                                                                 <CheckBox fx:id="statCovariance" mnemonicParsing="false" prefHeight="53.0" prefWidth="226.0" text="Covariance" />
-                                                                                <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
-                                                                                <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
-                                                                                <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
-                                                                                <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
-                                                                                <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
-                                                                                <CheckBox mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="CheckBox" />
+                                                                                <CheckBox fx:id="statYMean" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Dendent Variable Mean" />
+                                                                                <CheckBox fx:id="statYMedian" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Dependent Variable Median" />
+                                                                                <CheckBox fx:id="statYMax" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Dependent Variable Max" />
+                                                                                <CheckBox fx:id="statYMin" mnemonicParsing="false" prefHeight="37.0" prefWidth="226.0" text="Dependent Variable Min" />
                                                                             </children>
                                                                         </VBox>
                                                       <ChoiceBox fx:id="polynomialChoiceBox" layoutX="150.0" prefHeight="41.0" prefWidth="44.0" style="-fx-text-fill: black;" />
@@ -70,7 +68,7 @@
                                                             <content>
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="70.0" prefWidth="555.0">
                                                                     <children>
-                                                                        <TextField layoutX="1.0" prefHeight="75.0" prefWidth="553.0" promptText="f(x), Model Equation">
+                                                                        <TextField fx:id="modelInput" layoutX="1.0" prefHeight="75.0" prefWidth="553.0" promptText="f(x), Model Equation">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></TextField>

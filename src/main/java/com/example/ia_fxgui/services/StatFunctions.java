@@ -22,115 +22,103 @@ import static com.example.ia_fxgui.services.PDFCreator.resultStatArray;
 public class StatFunctions {
 
 
-    public static Object[][] ZAMENIT_NAFIG_getFunctionsInArray() {
-        //TODO
-        List<StatFunctionRow> rowList = createResultArray("filename");
-
-        Object[][] result = new Object[rowList.size()][2];
-        for (int i = 0; i < result.length; i++) {
-            result[i][0] = rowList.get(i).getName();
-            result[i][1] = rowList.get(i).getValue();
-        }
-
-        return result;
-    }
-
-    private void StatFunctions() {
-    }
+    private void StatFunctions(){}
 
     private static DescriptiveStatistics stats = new DescriptiveStatistics();
     private static List<StatFunctionRow> resultList = new ArrayList<>();
 
 
-    public static double calculateYMean(double[][] csvData) {
+    public static Double calculateYMean(Double[][] csvData) {
         Mean mean = new Mean();
-        double meanValue = mean.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double meanValue = mean.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Mean of the Dependent Variable", meanValue);
         return meanValue;
     }
 
-    public static double calculateYStandardDeviation(double[][] csvData) {
+    public static Double calculateYStandardDeviation(Double[][] csvData) {
         StandardDeviation stdDev = new StandardDeviation();
-        double stdDevValue = stdDev.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double stdDevValue = stdDev.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Standard Deviation of the Dependent Variable", stdDevValue);
         return stdDevValue;
     }
 
-    public static double calculateYMedian(double[][] csvData) {
+    public static Double calculateYMedian(Double[][] csvData) {
         Median median = new Median();
-        double medianValue = median.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double medianValue = median.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Median of the Dependent Variable", medianValue);
         return medianValue;
     }
 
-    public static double calculateYVariance(double[][] csvData) {
+    public static Double calculateYVariance(Double[][] csvData) {
         Variance variance = new Variance();
-        double varianceValue = variance.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double varianceValue = variance.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Variance of the Dependent Variable", varianceValue);
         return varianceValue;
     }
 
 
-    public static double calculateMinY(double[][] csvData) {
+    public static Double calculateMinY(Double[][] csvData) {
         Min min = new Min();
-        double minY = min.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double minY = min.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Minimum of the Dependent Variable", minY);
         return minY;
     }
 
-    public static double calculateMaxY(double[][] csvData) {
+    public static Double calculateMaxY(Double[][] csvData) {
         Max max = new Max();
-        double maxY = max.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double maxY = max.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Max of the Dependent Variable", maxY);
         return maxY;
     }
 
-    public static double calculateKurtosisY(double[][] csvData) {
+    public static Double calculateKurtosisY(Double[][] csvData) {
         Kurtosis kurtosis = new Kurtosis();
-        double kurtosisY = kurtosis.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double kurtosisY = kurtosis.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Kurtosis of the Dependent Variable", kurtosisY);
         return kurtosisY;
     }
 
-    public static double calculateSkewnessY(double[][] csvData) {
+    public static Double calculateSkewnessY(Double[][] csvData) {
         Skewness skewness = new Skewness();
-        double skewnessY = skewness.evaluate(getColumn(csvData, 1)); // Y values are in the second column
+        Double skewnessY = skewness.evaluate(getColumn(csvData, 1)); // Y values are in the second column
         addOrUpdateResult("Skewness of the dependent variable", skewnessY);
         return skewnessY;
     }
 
-    public static double calculateCovarianceXY(double[][] csvData) {
+    public static Double calculateCovarianceXY(Double[][] csvData) {
         Covariance covariance = new Covariance();
-        double covarianceXY = covariance.covariance(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
+        Double covarianceXY = covariance.covariance(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
         addOrUpdateResult("Covariance", covarianceXY);
         return covarianceXY;
     }
 
-    public static double calculatePearsonsCorrelationCoefficient(double[][] csvData) {
+    public static Double calculatePearsonsCorrelationCoefficient(Double[][] csvData) {
         PearsonsCorrelation correlation = new PearsonsCorrelation();
-        double pearsonsCorrelation = correlation.correlation(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
+        Double pearsonsCorrelation = correlation.correlation(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
         addOrUpdateResult("Pearson's Correlation Coefficient", pearsonsCorrelation);
         return pearsonsCorrelation;
     }
 
-    public static double calculateSpearmansCorrelationCoefficient(double[][] csvData) {
+    public static Double calculateSpearmansCorrelationCoefficient(Double[][] csvData) {
         SpearmansCorrelation correlation = new SpearmansCorrelation();
-        double spearmansCorrelation = correlation.correlation(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
+        Double spearmansCorrelation = correlation.correlation(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
         addOrUpdateResult("Spearman's Correlation Coefficient", spearmansCorrelation);
         return spearmansCorrelation;
     }
 
-    public static double calculateKendallsCorrelationCoefficient(double[][] csvData) {
+    public static Double calculateKendallsCorrelationCoefficient(Double[][] csvData) {
         KendallsCorrelation correlation = new KendallsCorrelation();
-        double kendallsCorrelation = correlation.correlation(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
+        Double kendallsCorrelation = correlation.correlation(getColumn(csvData, 0), getColumn(csvData, 1)); // X and Y values are in the first and second columns, respectively
         addOrUpdateResult("Kendall's Correlation Coefficient", kendallsCorrelation);
         return kendallsCorrelation;
     }
 
 
-    public static String fitPolynomial(int n, double[][] csvData) {
+    public static String fitPolynomial(int n, Double[][] csvData) {
+
+        if(n!=0){
         WeightedObservedPoints obs = new WeightedObservedPoints();
-        for (double[] row : csvData) {
+        for (Double[] row : csvData) {
             obs.add(row[0], row[1]); // Assuming X values are in the first column, Y values in the second
         }
 
@@ -139,6 +127,7 @@ public class StatFunctions {
 
         PolynomialFunction polynomialFunction = new PolynomialFunction(roundCoefficients(coeffs));
 
+        addOrUpdateResult("Polynomial Curve fit of degree "+n, polynomialToString(polynomialFunction));
         return polynomialToString(polynomialFunction);
     }
 
@@ -170,7 +159,7 @@ public class StatFunctions {
         int degree = coefficients.length - 1;
 
         for (int i = degree; i >= 0; i--) {
-            double coefficient = roundToThreeSF(coefficients[i]);
+            Double coefficient = roundToThreeSF(coefficients[i]);
             if (coefficient != 0) {
                 if (i == degree) {
                     sb.append(coefficient);
@@ -191,12 +180,12 @@ public class StatFunctions {
     }
 
 
-    private static double roundToThreeSF(double value) {
-        double scale = Math.pow(10, 3 - Math.floor(Math.log10(Math.abs(value))));
+    private static Double roundToThreeSF(Double value) {
+        Double scale = Math.pow(10, 3 - Math.floor(Math.log10(Math.abs(value))));
         return Math.round(value * scale) / scale;
     }
 
-    private static double[] getColumn(double[][] csvData, int columnIndex) {
+    private static double[] getColumn(Double[][] csvData, int columnIndex) {
         double[] column = new double[csvData.length];
         for (int i = 0; i < csvData.length; i++) {
             column[i] = csvData[i][columnIndex];
@@ -204,7 +193,7 @@ public class StatFunctions {
         return column;
     }
 
-    private static void addOrUpdateResult(String functionName, double value) {
+    private static void addOrUpdateResult(String functionName, Object value) {
         // Check if the function already exists in the resultList
         for (StatFunctionRow row : resultList) {
             if (row.getName().equals(functionName)) {
