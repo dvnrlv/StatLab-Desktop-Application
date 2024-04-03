@@ -1,6 +1,7 @@
 package com.example.ia_fxgui;
 
 import com.example.ia_fxgui.db.DBManager;
+import com.example.ia_fxgui.services.Grapher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

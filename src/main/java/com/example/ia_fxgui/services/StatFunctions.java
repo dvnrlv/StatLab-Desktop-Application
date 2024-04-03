@@ -17,8 +17,6 @@ import org.apache.commons.math3.stat.descriptive.rank.Min;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.ia_fxgui.services.PDFCreator.resultStatArray;
-
 public class StatFunctions {
 
 
@@ -145,7 +143,6 @@ public class StatFunctions {
 
     public static void clearResultArray() {
         resultList.clear();
-        resultStatArray = null;
     }
 
     private static double[] roundCoefficients(double[] coefficients) {
@@ -201,7 +198,10 @@ public class StatFunctions {
         for (StatFunctionRow row : resultList) {
             if (row.getName().equals(functionName)) {
                 // Update the existing value
-                row.setValue(value.toString());
+                if (value instanceof Double) {
+
+                    row.setValue(value.toString());
+                }
                 return;
             }
         }
@@ -213,19 +213,6 @@ public class StatFunctions {
     private static void clearStats() {
         stats.clear();
     }
-
-    public static Object[][] ZAMENIT_NAFIG_getFunctionsInArray() {
-        //TODO
-        List<StatFunctionRow> rowList = createResultArray("TODO");
-        Object[][] result = new Object[rowList.size()][2];
-        for (int i = 0; i < result.length; i++) {
-            result[i][0] = rowList.get(i).getName();
-            result[i][1] = rowList.get(i).getValue();
-        }
-
-        return result;
-    }
-
 
     public static class StatFunctionRow {
         private SimpleStringProperty name;

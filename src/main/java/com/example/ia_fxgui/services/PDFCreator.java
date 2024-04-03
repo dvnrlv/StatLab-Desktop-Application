@@ -20,10 +20,7 @@ import com.itextpdf.text.Image;
 
 public class PDFCreator {
 
-    static Object[][] resultStatArray = StatFunctions.ZAMENIT_NAFIG_getFunctionsInArray();
-
-
-    static void createPDF(String chartImagePath, String pdfDest){
+    static void createPDF(Object[][] resultStatArray, String chartImagePath, String pdfDest){
 
         String fileName = (String)resultStatArray[0][1];
         fileName = fileName.replace(".csv","");

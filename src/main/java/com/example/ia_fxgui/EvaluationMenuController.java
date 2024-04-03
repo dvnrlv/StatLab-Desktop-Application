@@ -183,12 +183,12 @@ public class EvaluationMenuController {
         // Add logic to calculate and graph data
         String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
         String model;
-        if (modelInput.toString() != "" && modelInput.toString() != null) {
+        if (modelInput.toString() != null && !modelInput.toString().isEmpty()) {
             model = modelInput.toString();
         } else {
             model = null;
         }
-//        resultLineChart = Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
+        resultLineChart = Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
         //display resultStatArray and LineChart
 
         populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
@@ -225,7 +225,7 @@ public class EvaluationMenuController {
 
             String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
             String model;
-            if (modelInput.toString() != "" && modelInput.toString() != null) {
+            if (modelInput.toString() != null && !modelInput.toString().isEmpty()) {
                 model = modelInput.toString();
             } else {
                 model = null;
