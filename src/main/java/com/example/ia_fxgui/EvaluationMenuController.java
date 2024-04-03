@@ -188,8 +188,9 @@ public class EvaluationMenuController {
         } else {
             model = null;
         }
-        resultLineChart = Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
-        //display resultStatArray and LineChart
+
+
+        Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
 
         populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
     }
@@ -230,8 +231,8 @@ public class EvaluationMenuController {
             } else {
                 model = null;
             }
-            resultLineChart = Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
 
+            Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
 
             LineChartController controller = loader.getController();
             controller.setLineChart(resultLineChart);

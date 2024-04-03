@@ -15,16 +15,15 @@ public class Grapher {
 
     //with model and best fit
 
-    public static LineChart<Number, Number> displayDataSet(Double[][] dataset, String xAxisName, String yAxisName, String bestFit, String model, String fileName) {
+    public static void displayDataSet(LineChart<Number, Number> lineChart, Double[][] dataset, String xAxisName, String yAxisName, String bestFit, String model, String fileName) {
 
         fileName = fileName.replace(".csv", "");
 
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel(xAxisName);
-        yAxis.setLabel(yAxisName);
+        lineChart.getData().clear();
 
-        final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.getXAxis().setLabel(xAxisName);
+        lineChart.getYAxis().setLabel(yAxisName);
+
         lineChart.setTitle(fileName);
 
         try {
@@ -102,8 +101,6 @@ public class Grapher {
 
             lineChart.getData().add(bestFitSeries);
         }
-
-        return lineChart;
     }
 
 

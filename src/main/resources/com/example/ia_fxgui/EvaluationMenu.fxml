@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
@@ -163,7 +162,7 @@
                                                                         <LineChart fx:id="resultLineChart" layoutY="7.0"
                                                                                    prefHeight="346.0" prefWidth="440.0">
                                                                             <xAxis>
-                                                                                <CategoryAxis side="BOTTOM"/>
+                                                                                <NumberAxis side="BOTTOM"/>
                                                                             </xAxis>
                                                                             <yAxis>
                                                                                 <NumberAxis side="LEFT"/>
