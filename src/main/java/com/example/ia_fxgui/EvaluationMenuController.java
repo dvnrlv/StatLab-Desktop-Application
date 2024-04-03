@@ -5,8 +5,9 @@ import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.services.CSVFileParser;
 import com.example.ia_fxgui.services.DatasetStorage;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
+import com.example.ia_fxgui.services.Grapher;
+import com.example.ia_fxgui.services.StatFunctions;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,7 +63,7 @@ public class EvaluationMenuController {
     private Button exitToMenu;
 
     @FXML
-    private LineChart<String, Number> resultLineChart;
+    private LineChart<Number, Number> resultLineChart;
 
     @FXML
     private Button showLargerChart;
@@ -169,7 +170,6 @@ public class EvaluationMenuController {
     }
 
 
-
     private static int selectedPolynomialValue = 0;
 
     public void getPolynomialDegree(ActionEvent event) {
@@ -181,14 +181,14 @@ public class EvaluationMenuController {
     private void calculateAndGraph() {
         System.out.println("Calculate and Graph button clicked.");
         // Add logic to calculate and graph data
-        String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue,DatasetStorage.getDataset().getPointsArray());
+        String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
         String model;
-        if(modelInput.toString()!="" && modelInput.toString()!=null){
+        if (modelInput.toString() != "" && modelInput.toString() != null) {
             model = modelInput.toString();
-        }else{
-            model=null;
+        } else {
+            model = null;
         }
-        resultLineChart=Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(),"x","y",bestFit,model,DatasetStorage.getDataset().getName());
+//        resultLineChart = Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
         //display resultStatArray and LineChart
 
         populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
@@ -223,12 +223,12 @@ public class EvaluationMenuController {
             Parent root = loader.load();
 
 
-            String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue,DatasetStorage.getDataset().getPointsArray());
+            String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
             String model;
-            if(modelInput.toString()!="" && modelInput.toString()!=null){
+            if (modelInput.toString() != "" && modelInput.toString() != null) {
                 model = modelInput.toString();
-            }else{
-                model=null;
+            } else {
+                model = null;
             }
             resultLineChart=Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(),"x","y",bestFit,model,DatasetStorage.getDataset().getName());
 
@@ -252,7 +252,6 @@ public class EvaluationMenuController {
             lineChart.getData().addAll(chart.getData());
         }
     }
-
 
 
     private void plotInDesmos() {

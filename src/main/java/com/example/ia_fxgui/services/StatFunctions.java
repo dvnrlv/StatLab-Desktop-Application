@@ -22,7 +22,8 @@ import static com.example.ia_fxgui.services.PDFCreator.resultStatArray;
 public class StatFunctions {
 
 
-    private void StatFunctions(){}
+//    private void StatFunctions(){}
+
 
     private static DescriptiveStatistics stats = new DescriptiveStatistics();
     private static List<StatFunctionRow> resultList = new ArrayList<>();
@@ -116,19 +117,22 @@ public class StatFunctions {
 
     public static String fitPolynomial(int n, Double[][] csvData) {
 
-        if(n!=0){
-        WeightedObservedPoints obs = new WeightedObservedPoints();
-        for (Double[] row : csvData) {
-            obs.add(row[0], row[1]); // Assuming X values are in the first column, Y values in the second
+        if (n != 0) {
+            WeightedObservedPoints obs = new WeightedObservedPoints();
+            for (Double[] row : csvData) {
+                obs.add(row[0], row[1]); // Assuming X values are in the first column, Y values in the second
+            }
+
+            PolynomialCurveFitter fitter = PolynomialCurveFitter.create(n);
+            double[] coeffs = fitter.fit(obs.toList());
+
+            PolynomialFunction polynomialFunction = new PolynomialFunction(roundCoefficients(coeffs));
+
+            addOrUpdateResult("Polynomial Curve fit of degree " + n, polynomialToString(polynomialFunction));
+            return polynomialToString(polynomialFunction);
+        } else {
+            return null;
         }
-
-        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(n);
-        double[] coeffs = fitter.fit(obs.toList());
-
-        PolynomialFunction polynomialFunction = new PolynomialFunction(roundCoefficients(coeffs));
-
-        addOrUpdateResult("Polynomial Curve fit of degree "+n, polynomialToString(polynomialFunction));
-        return polynomialToString(polynomialFunction);
     }
 
     public static List<StatFunctionRow> createResultArray(String fileName) {
@@ -198,17 +202,29 @@ public class StatFunctions {
         for (StatFunctionRow row : resultList) {
             if (row.getName().equals(functionName)) {
                 // Update the existing value
-                row.setValue(value);
+                row.setValue(value.toString());
                 return;
             }
         }
         // If the function does not exist, add it as a new row
-        StatFunctionRow newRow = new StatFunctionRow(functionName, value);
+        StatFunctionRow newRow = new StatFunctionRow(functionName, value.toString());
         resultList.add(newRow);
     }
 
     private static void clearStats() {
         stats.clear();
+    }
+
+    public static Object[][] ZAMENIT_NAFIG_getFunctionsInArray() {
+        //TODO
+        List<StatFunctionRow> rowList = createResultArray("TODO");
+        Object[][] result = new Object[rowList.size()][2];
+        for (int i = 0; i < result.length; i++) {
+            result[i][0] = rowList.get(i).getName();
+            result[i][1] = rowList.get(i).getValue();
+        }
+
+        return result;
     }
 
 
