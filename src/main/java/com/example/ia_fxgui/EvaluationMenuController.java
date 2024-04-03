@@ -230,7 +230,7 @@ public class EvaluationMenuController {
             } else {
                 model = null;
             }
-            resultLineChart=Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(),"x","y",bestFit,model,DatasetStorage.getDataset().getName());
+            resultLineChart = Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
 
 
             LineChartController controller = loader.getController();
@@ -270,7 +270,9 @@ public class EvaluationMenuController {
         resultStatArrayTable.getItems().clear(); // Clear existing items
         resultStatArrayTable.getItems().addAll(FXCollections.observableArrayList(data)); // Add new items
         nameColumn = new TableColumn<>("Statistical Function");
+        nameColumn.setStyle("-fx-pref-width: 331");
         valueColumn = new TableColumn<>("Calculated Value");
+        valueColumn.setStyle("-fx-pref-width: 301");
 
         // Set cell value factories after populating the table
         resultStatArrayTable.getColumns().clear();

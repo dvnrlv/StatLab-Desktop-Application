@@ -138,7 +138,6 @@ public class StatFunctions {
     public static List<StatFunctionRow> createResultArray(String fileName) {
         List<StatFunctionRow> resultStatList = new ArrayList<>();
         resultStatList.add(new StatFunctionRow("FileName", fileName));
-        resultStatList.add(new StatFunctionRow("FileDate", "TODO"));
         resultStatList.addAll(resultList);
         return resultStatList;
 //        clearStats();
