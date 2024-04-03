@@ -1,7 +1,9 @@
 package com.example.ia_fxgui.services;
 
-import java.time.LocalDate;
-
+import javafx.beans.property.SimpleStringProperty;
+import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
+import org.apache.commons.math3.fitting.PolynomialCurveFitter;
+import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import org.apache.commons.math3.stat.correlation.Covariance;
 import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
@@ -11,23 +13,34 @@ import org.apache.commons.math3.stat.descriptive.moment.*;
 import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
-import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
-import org.apache.commons.math3.fitting.PolynomialCurveFitter;
-import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.ia_fxgui.services.PDFCreator.resultStatArray;
 
 public class StatFunctions {
 
 
-    private void StatFunctions(){}
+    public static Object[][] ZAMENIT_NAFIG_getFunctionsInArray() {
+        //TODO
+        List<StatFunctionRow> rowList = createResultArray("filename");
+
+        Object[][] result = new Object[rowList.size()][2];
+        for (int i = 0; i < result.length; i++) {
+            result[i][0] = rowList.get(i).getName();
+            result[i][1] = rowList.get(i).getValue();
+        }
+
+        return result;
+    }
+
+    private void StatFunctions() {
+    }
 
     private static DescriptiveStatistics stats = new DescriptiveStatistics();
-    private static ArrayList<ArrayList<Object>> resultList = new ArrayList<>();
-    public static Object[][] resultStatArray;
+    private static List<StatFunctionRow> resultList = new ArrayList<>();
+
 
     public static double calculateYMean(double[][] csvData) {
         Mean mean = new Mean();
@@ -129,17 +142,13 @@ public class StatFunctions {
         return polynomialToString(polynomialFunction);
     }
 
-    public static void createResultArray(String fileName) {
-        resultStatArray = new Object[resultList.size() + 2][2]; // Adding 2 rows for filename and file date
-        resultStatArray[0][0] = "Filename"; // Placeholder for filename
-        resultStatArray[0][1] = fileName; // Set filename
-        resultStatArray[1][0] = "File Date"; // Placeholder for file date
-        resultStatArray[1][1] = LocalDate.now().toString(); // Set current date
-        for (int i = 0; i < resultList.size(); i++) {
-            resultStatArray[i + 2][0] = resultList.get(i).get(0);
-            resultStatArray[i + 2][1] = resultList.get(i).get(1);
-        }
-        clearStats();
+    public static List<StatFunctionRow> createResultArray(String fileName) {
+        List<StatFunctionRow> resultStatList = new ArrayList<>();
+        resultStatList.add(new StatFunctionRow("FileName", fileName));
+        resultStatList.add(new StatFunctionRow("FileDate", "TODO"));
+        resultStatList.addAll(resultList);
+        return resultStatList;
+//        clearStats();
     }
 
     public static void clearResultArray() {
@@ -197,23 +206,55 @@ public class StatFunctions {
 
     private static void addOrUpdateResult(String functionName, double value) {
         // Check if the function already exists in the resultList
-        for (ArrayList<Object> row : resultList) {
-            if (row.get(0).equals(functionName)) {
+        for (StatFunctionRow row : resultList) {
+            if (row.getName().equals(functionName)) {
                 // Update the existing value
-                row.set(1, value);
+                row.setValue(value);
                 return;
             }
         }
         // If the function does not exist, add it as a new row
-        ArrayList<Object> newRow = new ArrayList<>();
-        newRow.add(functionName);
-        newRow.add(value);
+        StatFunctionRow newRow = new StatFunctionRow(functionName, value);
         resultList.add(newRow);
     }
 
     private static void clearStats() {
         stats.clear();
-        resultStatArray = null;
     }
 
+
+    public static class StatFunctionRow {
+        private SimpleStringProperty name;
+        private SimpleStringProperty value;
+
+        public StatFunctionRow(String name, String value) {
+            this.name = new SimpleStringProperty(name);
+            this.value = new SimpleStringProperty(value);
+        }
+
+        public StatFunctionRow(String name, double value) {
+            this.name = new SimpleStringProperty(name);
+            this.value = new SimpleStringProperty(Double.toString(value));
+        }
+
+        public String getName() {
+            return this.name.get();
+        }
+
+        public void setName(String name) {
+            this.name.set(name);
+        }
+
+        public String getValue() {
+            return this.value.get();
+        }
+
+        public void setValue(String value) {
+            this.value.set(value);
+        }
+
+        public void setValue(double value) {
+            this.value.set(Double.toString(value));
+        }
+    }
 }

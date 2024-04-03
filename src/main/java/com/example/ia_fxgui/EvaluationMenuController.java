@@ -5,8 +5,8 @@ import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.models.Dataset;
 import com.example.ia_fxgui.services.CSVFileParser;
 import com.example.ia_fxgui.services.DatasetStorage;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
+import com.example.ia_fxgui.services.StatFunctions;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +14,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
 
@@ -35,19 +37,17 @@ public class EvaluationMenuController {
     private CheckBox statCovariance;
 
 
+    private TableColumn<StatFunctions.StatFunctionRow, String> nameColumn;
+
+
+    private TableColumn<StatFunctions.StatFunctionRow, String> valueColumn;
 
     @FXML
-    private TableColumn resultStatArrayString;
-
-    @FXML
-    private TableColumn resultStatArrayDouble;
-
-    @FXML
-    private TableView resultStatArrayTable;
+    private TableView<StatFunctions.StatFunctionRow> resultStatArrayTable;
 
     @FXML
     private ChoiceBox<Integer> polynomialChoiceBox;
-    private Integer[] polynomialChoiceBoxOptions = {1,2,3,4,5,6};
+    private Integer[] polynomialChoiceBoxOptions = {1, 2, 3, 4, 5, 6};
 
     @FXML
     private Button statCalc;
@@ -90,9 +90,6 @@ public class EvaluationMenuController {
         polynomialChoiceBox.getItems().addAll(polynomialChoiceBoxOptions);
         polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
         filenameDisplay.setText(DatasetStorage.getDataset().getName());
-
-
-
     }
 
 
@@ -111,10 +108,10 @@ public class EvaluationMenuController {
 
         //display resultStatArray and LineChart
 
-
+        populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
     }
 
-    private void saveDataSet()  {
+    private void saveDataSet() {
         System.out.println("Save Data Set button clicked.");
         DBManager.getInstance().getDatasetService().saveDataset(
                 new Dataset(CSVFileParser.getDatasetNameWOExtension(), CSVFileParser.parsedDataSet));
@@ -170,33 +167,20 @@ public class EvaluationMenuController {
         // Add logic to save data as PDF
     }
 
-    public void populateTable(Object[][] data) {
+    public void populateTable(List<StatFunctions.StatFunctionRow> data) {
         resultStatArrayTable.getItems().clear(); // Clear existing items
-        resultStatArrayTable.getItems().addAll(data); // Add new items
+        resultStatArrayTable.getItems().addAll(FXCollections.observableArrayList(data)); // Add new items
+        nameColumn = new TableColumn<>("Statistical Function");
+        valueColumn = new TableColumn<>("Calculated Value");
 
         // Set cell value factories after populating the table
-        resultStatArrayString.setCellValueFactory(cellData -> {
-            if (cellData.getValue() != null && cellData.getValue().length > 0) {
-                Object value = cellData.getValue()[0];
-                if (value != null) {
-                    return javafx.beans.property.SimpleStringProperty.valueOf(value.toString());
-                }
-            }
-            return javafx.beans.property.SimpleStringProperty.valueOf("");
-        });
+        resultStatArrayTable.getColumns().clear();
+        resultStatArrayTable.getColumns().add(nameColumn);
+        resultStatArrayTable.getColumns().add(valueColumn);
 
-        resultStatArrayDouble.setCellValueFactory(cellData -> {
-            if (cellData.getValue() != null && cellData.getValue().length > 1) {
-                Object value = cellData.getValue()[1];
-                if (value != null) {
-                    return javafx.beans.property.SimpleDoubleProperty.valueOf(Double.parseDouble(value.toString()));
-                }
-            }
-            return javafx.beans.property.SimpleDoubleProperty.valueOf(0.0);
-        });
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
     }
-
-
 
 
 }

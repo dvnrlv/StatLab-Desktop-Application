@@ -148,8 +148,8 @@
                                                                         <ListView fx:id="resultListView" layoutX="-1.0" layoutY="-2.0" prefHeight="374.0" prefWidth="644.0" />
                                                       <TableView fx:id="resultStatArrayTable" layoutX="2.0" prefHeight="368.0" prefWidth="626.0">
                                                         <columns>
-                                                          <TableColumn fx:id="resultStatArrayString" prefWidth="331.0" text="Statistical Function" />
-                                                          <TableColumn fx:id="resultStatArrayDouble" prefWidth="301.0" text="Calculated Value" />
+<!--                                                          <TableColumn fx:id="nameColumn" prefWidth="331.0"  text="Statistical Function" />-->
+<!--                                                          <TableColumn fx:id="resultStatArrayDouble" prefWidth="301.0" text="Calculated Value" />-->
                                                         </columns>
                                                       </TableView>
                                                                     </children>

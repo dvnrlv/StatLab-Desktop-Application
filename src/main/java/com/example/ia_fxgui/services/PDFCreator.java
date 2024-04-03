@@ -20,7 +20,7 @@ import com.itextpdf.text.Image;
 
 public class PDFCreator {
 
-    static Object[][] resultStatArray = StatFunctions.resultStatArray;
+    static Object[][] resultStatArray = StatFunctions.ZAMENIT_NAFIG_getFunctionsInArray();
 
 
     static void createPDF(String chartImagePath, String pdfDest){
