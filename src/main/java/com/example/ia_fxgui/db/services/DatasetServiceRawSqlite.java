@@ -168,8 +168,8 @@ public class DatasetServiceRawSqlite implements DatasetService {
         while (resultSet.next()) {
             points.add(
                     new Point(
-                            resultSet.getLong("x"),
-                            resultSet.getLong("y")
+                            (double) resultSet.getLong("x"),
+                            (double) resultSet.getLong("y")
                     )
             );
         }

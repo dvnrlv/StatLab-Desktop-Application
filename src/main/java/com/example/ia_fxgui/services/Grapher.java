@@ -14,7 +14,7 @@ public class Grapher {
 
  //with model and best fit
 
-    public static LineChart<Number, Number> displayDataSet(double[][] dataset, String xAxisName, String yAxisName, String bestFit, String model, String fileName) {
+    public static LineChart<Number, Number> displayDataSet(Double[][] dataset, String xAxisName, String yAxisName, String bestFit, String model, String fileName) {
 
         fileName = fileName.replace(".csv", "");
 
@@ -25,7 +25,18 @@ public class Grapher {
 
         final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle(fileName);
-        lineChart.getStylesheets().add(Grapher.class.getResource("chartStyle.css").toExternalForm());
+
+        try {
+            String cssResourcePath = Grapher.class.getResource("chartStyle.css").toExternalForm();
+            if (cssResourcePath != null) {
+                lineChart.getStylesheets().add(cssResourcePath);
+            } else {
+                System.err.println("Resource not found: chartStyle.css");
+            }
+        } catch (NullPointerException e) {
+            System.err.println("NullPointerException occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
 
 
         XYChart.Series<Number, Number> dataSeries = new XYChart.Series<>();
@@ -45,12 +56,12 @@ public class Grapher {
 
 
 
-            double minX = Double.MAX_VALUE;
-            double maxX = Double.MIN_VALUE;
+            Double minX = Double.MAX_VALUE;
+            Double maxX = Double.MIN_VALUE;
 
             // find the minimum and maximum x values
             for (Double[] data : dataset) {
-                for (double x : data) {
+                for (Double x : data) {
                     if (x < minX) {
                         minX = x;
                     }
@@ -60,7 +71,7 @@ public class Grapher {
                 }
             }
 
-            for (double x = Math.floor(minX); x <= Math.ceil(maxX); x = x + (Math.ceil(maxX) - Math.floor(minX)) / 1000) {
+            for (Double x = Math.floor(minX); x <= Math.ceil(maxX); x = x + (Math.ceil(maxX) - Math.floor(minX)) / 1000) {
                 modelSeries.getData().add(new XYChart.Data<>(x, EquationReader.evaluate(model, x))); //need to write expression with postorder tree traversal
             }
 
@@ -72,12 +83,12 @@ public class Grapher {
             bestFitSeries.setName("Polynomial Fit: "+bestFit);
             bestFitSeries.getNode().setId("bestFitSeries");
 
-            double minX = Double.MAX_VALUE;
-            double maxX = Double.MIN_VALUE;
+            Double minX = Double.MAX_VALUE;
+            Double maxX = Double.MIN_VALUE;
 
     // find the minimum and maximum x values
             for (Double[] data : dataset) {
-                for (double x : data) {
+                for (Double x : data) {
                     if (x < minX) {
                         minX = x;
                     }
@@ -87,7 +98,7 @@ public class Grapher {
                 }
             }
 
-            for (double x = Math.floor(minX); x <= Math.ceil(maxX); x = x + (Math.ceil(maxX) - Math.floor(minX)) / 1000) {
+            for (Double x = Math.floor(minX); x <= Math.ceil(maxX); x = x + (Math.ceil(maxX) - Math.floor(minX)) / 1000) {
                 bestFitSeries.getData().add(new XYChart.Data<>(x, EquationReader.evaluate(model, x))); //need to write expression with postorder tree traversal
                 }
 

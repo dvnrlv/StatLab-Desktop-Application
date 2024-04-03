@@ -36,8 +36,6 @@ public class EvaluationMenuController {
     @FXML
     private CheckBox statCovariance;
 
-
-
     @FXML
     private TableColumn resultStatArrayString;
 
@@ -82,6 +80,18 @@ public class EvaluationMenuController {
     private TextField modelInput;
 
     @FXML
+    private CheckBox statYMean;
+
+    @FXML
+    private CheckBox statYMedian;
+
+    @FXML
+    private CheckBox statYMax;
+
+    @FXML
+    private CheckBox statYMin;
+
+    @FXML
     public void initialize() {
         // Initialize ChoiceBox
 
@@ -96,10 +106,68 @@ public class EvaluationMenuController {
         polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
         filenameDisplay.setText(DatasetStorage.getDataset().getName());
 
+        statPearson.setOnAction(event -> handleStatPearson());
+        statKendall.setOnAction(event -> handleStatKendall());
+        statSpearman.setOnAction(event -> handleStatSpearman());
+        statCovariance.setOnAction(event -> handleStatCovariance());
+        statYMean.setOnAction(event -> handleStatYMean());
+        statYMedian.setOnAction(event -> handleStatYMedian());
+        statYMax.setOnAction(event -> handleStatYMax());
+        statYMin.setOnAction(event -> handleStatYMin());
+
     }
 
 
     // Event handlers
+
+    private void handleStatPearson() {
+        System.out.println("Pearson's Correlation selected");
+        StatFunctions.calculatePearsonsCorrelationCoefficient(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatKendall() {
+        System.out.println("Kendall's Correlation selected");
+        StatFunctions.calculateKendallsCorrelationCoefficient(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatSpearman() {
+        System.out.println("Spearman's Correlation selected");
+        StatFunctions.calculateSpearmansCorrelationCoefficient(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatCovariance() {
+        System.out.println("Covariance selected");
+        StatFunctions.calculateCovarianceXY(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatYMean() {
+        System.out.println("Dependent Variable Mean selected");
+        StatFunctions.calculateYMean(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatYMedian() {
+        System.out.println("Dependent Variable Median selected");
+        StatFunctions.calculateYMedian(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatYMax() {
+        System.out.println("Dependent Variable Max selected");
+        StatFunctions.calculateMaxY(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
+    private void handleStatYMin() {
+        System.out.println("Dependent Variable Min selected");
+        StatFunctions.calculateMinY(DatasetStorage.getDataset().getPointsArray());
+        // Implement your logic here
+    }
+
 
 
     private static int selectedPolynomialValue = 0;
@@ -114,8 +182,6 @@ public class EvaluationMenuController {
         System.out.println("Calculate and Graph button clicked.");
         // Add logic to calculate and graph data
         String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue,DatasetStorage.getDataset().getPointsArray());
-
-
         String model;
         if(modelInput.toString()!="" && modelInput.toString()!=null){
             model = modelInput.toString();
@@ -147,30 +213,45 @@ public class EvaluationMenuController {
         // Add logic to exit to main menu
     }
 
-    private void showLargerChart() {
-        System.out.println("Show Larger Chart button clicked.");
-        // Add logic to show a larger chart
 
+    public void showLargerChart() {
         try {
-            // Load the FXML file
+            System.out.println("Show Larger Chart");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("largerChart.fxml"));
             Parent root = loader.load();
 
-            // Get the controller instance
-            ChartController chartController = loader.getController();
 
-            // Pass the LineChart object to the controller
-            chartController.initializeChart(resultLineChart);
+            String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue,DatasetStorage.getDataset().getPointsArray());
+            String model;
+            if(modelInput.toString()!="" && modelInput.toString()!=null){
+                model = modelInput.toString();
+            }else{
+                model=null;
+            }
+            resultLineChart=Grapher.displayDataSet(DatasetStorage.getDataset().getPointsArray(),"x","y",bestFit,model,DatasetStorage.getDataset().getName());
 
-            // Create a new stage
+
+            LineChartController controller = loader.getController();
+            controller.setLineChart(resultLineChart);
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Chart Window");
             stage.show();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static class LineChartController {
+        @FXML
+        private LineChart<Number, Number> lineChart;
+
+        public void setLineChart(LineChart<Number, Number> chart) {
+            lineChart.getData().addAll(chart.getData());
+        }
+    }
+
+
 
     private void plotInDesmos() {
         System.out.println("Plot in Desmos button clicked.");

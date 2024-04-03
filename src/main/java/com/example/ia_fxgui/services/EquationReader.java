@@ -16,25 +16,26 @@ class TreeNode {
 
 public class EquationReader {
 
-    public static double evaluate(String expression, double x) {
+    public static Double evaluate(String expression, Double x) {
         TreeNode root = buildExpressionTree(expression);
         return evaluate(root, x);
     }
 
-    public static double evaluate(TreeNode root, double x) {
+    public static Double evaluate(TreeNode root, Double x) {
         if (root == null) {
             throw new IllegalArgumentException("Invalid expression tree!");
         }
 
         if (!isOperator(root.value.charAt(0))) {
-            if (root.value.charAt(0) == 'x') {
-                return x;
+            if (!root.value.equals("x")) {
+                Main.WarningPopup.openPopup("Variable must be 'x'");
+                throw new IllegalArgumentException("Variable must be 'x'");
             }
-            return Double.parseDouble(root.value);
+            return x;
         }
 
-        double leftValue = evaluate(root.left, x);
-        double rightValue = evaluate(root.right, x);
+        Double leftValue = evaluate(root.left, x);
+        Double rightValue = evaluate(root.right, x);
 
         if (root.value.equals("^")) {
             return Math.pow(leftValue, rightValue);
@@ -47,7 +48,7 @@ public class EquationReader {
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '^';
     }
 
-    public static double performOperation(char operator, double operand1, double operand2) {
+    public static Double performOperation(char operator, Double operand1, Double operand2) {
         switch (operator) {
             case '+':
                 return operand1 + operand2;
