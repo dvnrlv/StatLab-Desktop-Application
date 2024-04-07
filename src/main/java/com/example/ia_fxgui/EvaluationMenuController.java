@@ -195,7 +195,6 @@ public class EvaluationMenuController {
 
 
         Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", model, DatasetStorage.getDataset().getName());
-
         populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
     }
 

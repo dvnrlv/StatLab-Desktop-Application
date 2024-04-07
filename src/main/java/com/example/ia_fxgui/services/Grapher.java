@@ -26,6 +26,9 @@ public class Grapher {
 
         lineChart.setTitle(fileName);
 
+
+
+
         try {
             String cssResourcePath = SceneController.class.getResource("chartStyle.css").toExternalForm();
             if (cssResourcePath != null) {
@@ -38,18 +41,7 @@ public class Grapher {
             e.printStackTrace();
         }
 
-
-        XYChart.Series<Number, Number> dataSeries = new XYChart.Series<>();
-
-        for (int i = 0; i < dataset.length; i++) {
-            dataSeries.getData().add(new XYChart.Data<>(dataset[i][0], dataset[i][1]));
-            System.out.println(dataset[i][0]); // X variable
-            System.out.println(dataset[i][1]); // Y variable
-        }
-        lineChart.getData().add(dataSeries);
-        dataSeries.setName("Experimental Data");
-
-//        dataSeries.getNode().setId("dataSeries");
+        //        dataSeries.getNode().setId("dataSeries");
         if (model != null) {
 
             XYChart.Series<Number, Number> modelSeries = new XYChart.Series<>();
@@ -69,13 +61,30 @@ public class Grapher {
             System.out.println(minX+ ", "+ maxX);
 
             for (Double x = Math.floor(minX); x <= Math.ceil(maxX); x = x + (Math.ceil(maxX) - Math.floor(minX)) / 1000) {
-                modelSeries.getData().add(new XYChart.Data<>(x, EquationReader.evaluate(model, x))); //need to write expression with postorder tree traversal
+                modelSeries.getData().add(new XYChart.Data<>(x, EquationReader.evaluate(model, x)));//need to write expression with postorder tree traversal
             }
 
 
             lineChart.getData().add(modelSeries);
             modelSeries.getNode().setId("modelSeries");
+            modelSeries.getNode().setStyle("-fx-background: transparent;");
+
         }
+
+
+        XYChart.Series<Number, Number> dataSeries = new XYChart.Series<>();
+
+        for (int i = 0; i < dataset.length; i++) {
+            dataSeries.getData().add(new XYChart.Data<>(dataset[i][0], dataset[i][1]));
+            System.out.println(dataset[i][0]); // X variable
+            System.out.println(dataset[i][1]); // Y variable
+        }
+        lineChart.getData().add(dataSeries);
+        dataSeries.setName("Experimental Data");
+        dataSeries.getNode().setStyle("-fx-stroke: transparent;" +
+                "-fx-background: red;");
+
+
 
         //if (bestFit != null) {
           //  XYChart.Series<Number, Number> bestFitSeries = new XYChart.Series<>();

@@ -8,14 +8,7 @@
 }
 
 
-#dataSeries > .chart-line-symbol {
-    -fx-background-color: #ff0000; /* Customize points color = red*/
-    -fx-background-radius: 5px; /* Make points round */
-}
 
-#dataSeries > .chart-series-line {
-    -fx-stroke: transparent; /* Hide line */
-}
 
 
 
