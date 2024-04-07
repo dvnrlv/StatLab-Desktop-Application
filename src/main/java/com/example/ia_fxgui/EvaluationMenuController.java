@@ -65,8 +65,8 @@ public class EvaluationMenuController {
     @FXML
     private LineChart<Number, Number> resultLineChart;
 
-    @FXML
-    private Button showLargerChart;
+    //@FXML
+    //private Button showLargerChart;
 
     @FXML
     private Button plotDesmos;
@@ -100,11 +100,11 @@ public class EvaluationMenuController {
         statCalc.setOnAction(event -> calculateAndGraph());
         statSave.setOnAction(event -> saveDataSet());
         exitToMenu.setOnAction(event -> exitToMainMenu());
-        showLargerChart.setOnAction(event -> showLargerChart());
+        //showLargerChart.setOnAction(event -> showLargerChart());
         plotDesmos.setOnAction(event -> plotInDesmos());
         producePDF.setOnAction(event -> saveAsPDF());
-        polynomialChoiceBox.getItems().addAll(polynomialChoiceBoxOptions);
-        polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
+        //polynomialChoiceBox.getItems().addAll(polynomialChoiceBoxOptions);
+        //polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
         filenameDisplay.setText(DatasetStorage.getDataset().getName());
 
         statPearson.setOnAction(event -> handleStatPearson());
@@ -181,16 +181,20 @@ public class EvaluationMenuController {
     private void calculateAndGraph() {
         System.out.println("Calculate and Graph button clicked.");
         // Add logic to calculate and graph data
-        String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
+       // String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
         String model;
-        if (modelInput.toString() != null && !modelInput.toString().isEmpty()) {
-            model = modelInput.toString();
+        if (modelInput.getText() != null && !modelInput.getText().isEmpty()) {
+            model = modelInput.getText();
+            System.out.println(model);
+
         } else {
             model = null;
+            System.out.println("null model");
         }
 
 
-        Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
+
+        Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", model, DatasetStorage.getDataset().getName());
 
         populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
     }
@@ -232,7 +236,7 @@ public class EvaluationMenuController {
                 model = null;
             }
 
-            Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", bestFit, model, DatasetStorage.getDataset().getName());
+            Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", model, DatasetStorage.getDataset().getName());
 
             LineChartController controller = loader.getController();
             controller.setLineChart(resultLineChart);
@@ -264,6 +268,7 @@ public class EvaluationMenuController {
 
     private void saveAsPDF() {
         System.out.println("Save as PDF button clicked.");
+
         // Add logic to save data as PDF
     }
 

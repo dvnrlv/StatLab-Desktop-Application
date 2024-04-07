@@ -2,53 +2,106 @@ package com.example.ia_fxgui.services;
 
 import com.example.ia_fxgui.Main;
 
+import java.util.Scanner;
 import java.util.Stack;
 
-class TreeNode {
-    String value;
-    TreeNode left, right;
-
-    public TreeNode(String value) {
-        this.value = value;
-        left = right = null;
-    }
-}
-
 public class EquationReader {
-
-    public static Double evaluate(String expression, Double x) {
-        TreeNode root = buildExpressionTree(expression);
-        return evaluate(root, x);
+    public static Double evaluate(String expression, double xValue) {
+        String postfixExpression = infixToPostfix(expression);
+        return evaluatePostfix(postfixExpression, xValue);
     }
 
-    public static Double evaluate(TreeNode root, Double x) {
-        if (root == null) {
-            throw new IllegalArgumentException("Invalid expression tree!");
-        }
-
-        if (!isOperator(root.value.charAt(0))) {
-            if (!root.value.equals("x")) {
-                Main.WarningPopup.openPopup("Variable must be 'x'");
-                throw new IllegalArgumentException("Variable must be 'x'");
+    private static Double evaluatePostfix(String postfixExpression, double xValue) {
+        Stack<Double> stack = new Stack<>();
+        String[] tokens = postfixExpression.split("\\s+");
+        for (String token : tokens) {
+            if (token.isEmpty()) continue;
+            char c = token.charAt(0);
+            if (Character.isDigit(c)) {
+                stack.push(Double.parseDouble(token));
+            } else if (c == 'x') {
+                stack.push(xValue);
+            } else if (isOperator(c)) {
+                double operand2 = stack.pop();
+                if (stack.isEmpty()) {
+                    Main.WarningPopup.openPopup("Invalid expression format");
+                    throw new IllegalArgumentException("Invalid expression format: insufficient operands");
+                }
+                double operand1 = stack.pop();
+                stack.push(applyOperator(operand1, operand2, c));
+            } else if (c == '~') {
+                if (stack.isEmpty()) {
+                    Main.WarningPopup.openPopup("Invalid expression format");
+                    throw new IllegalArgumentException("Invalid expression format: insufficient operands for unary minus");
+                }
+                double operand = stack.pop();
+                stack.push(-operand);
             }
-            return x;
         }
-
-        Double leftValue = evaluate(root.left, x);
-        Double rightValue = evaluate(root.right, x);
-
-        if (root.value.equals("^")) {
-            return Math.pow(leftValue, rightValue);
+        if (stack.size() != 1) {
+            Main.WarningPopup.openPopup("Invalid expression format");
+            throw new IllegalArgumentException("Invalid expression format: incorrect number of operands");
         }
-
-        return performOperation(root.value.charAt(0), leftValue, rightValue);
+        return stack.pop();
     }
 
-    public static boolean isOperator(char c) {
+    private static String infixToPostfix(String expression) {
+        StringBuilder postfix = new StringBuilder();
+        Stack<Character> operatorStack = new Stack<>();
+        String[] tokens = expression.split("\\s+");
+        boolean expectOperand = true;
+        for (String token : tokens) {
+            if (token.isEmpty()) continue;
+            char c = token.charAt(0);
+            if (Character.isDigit(c)) {
+                postfix.append(token).append(" ");
+                expectOperand = false;
+            } else if (c == 'x') {
+                postfix.append(token).append(" ");
+                expectOperand = false;
+            } else if (c == '(') {
+                operatorStack.push(c);
+                expectOperand = true;
+            } else if (c == ')') {
+                while (!operatorStack.isEmpty() && operatorStack.peek() != '(') {
+                    postfix.append(operatorStack.pop()).append(" ");
+                }
+                operatorStack.pop();
+                expectOperand = false;
+            } else if (isOperator(c)) {
+                if (expectOperand && c == '-') {
+                    // Unary minus '~' instead of '-'
+                    c = '~';
+                }
+                while (!operatorStack.isEmpty() && precedence(operatorStack.peek()) >= precedence(c)) {
+                    postfix.append(operatorStack.pop()).append(" ");
+                }
+                operatorStack.push(c);
+                expectOperand = true;
+            }
+        }
+        while (!operatorStack.isEmpty()) {
+            postfix.append(operatorStack.pop()).append(" ");
+        }
+        return postfix.toString().trim();
+    }
+
+    private static boolean isOperator(char c) {
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '^';
     }
 
-    public static Double performOperation(char operator, Double operand1, Double operand2) {
+    private static int precedence(char operator) {
+        if (operator == '+' || operator == '-') {
+            return 1;
+        } else if (operator == '*' || operator == '/') {
+            return 2;
+        } else if (operator == '^') {
+            return 3;
+        }
+        return 0;
+    }
+
+    private static double applyOperator(double operand1, double operand2, char operator) {
         switch (operator) {
             case '+':
                 return operand1 + operand2;
@@ -57,33 +110,12 @@ public class EquationReader {
             case '*':
                 return operand1 * operand2;
             case '/':
-                if (operand2 == 0) {
-                    Main.WarningPopup.openPopup("Division by zero!");
-                    throw new ArithmeticException("Division by zero!");
-                }
                 return operand1 / operand2;
+            case '^':
+                return Math.pow(operand1, operand2);
             default:
-                Main.WarningPopup.openPopup("Invalid operator: " + operator);
-                throw new IllegalArgumentException("Invalid operator: " + operator);
-
+                Main.WarningPopup.openPopup("Invalid operator");
+                throw new IllegalArgumentException("Invalid operator");
         }
-    }
-
-    private static TreeNode buildExpressionTree(String expression) {
-        Stack<TreeNode> stack = new Stack<>();
-
-        for (char c : expression.toCharArray()) {
-            if (isOperator(c)) {
-                TreeNode right = stack.pop();
-                TreeNode left = stack.pop();
-                TreeNode newNode = new TreeNode(Character.toString(c));
-                newNode.left = left;
-                newNode.right = right;
-                stack.push(newNode);
-            } else if (Character.isDigit(c) || c == 'x') {
-                stack.push(new TreeNode(Character.toString(c)));
-            }
-        }
-        return stack.pop();
     }
 }
