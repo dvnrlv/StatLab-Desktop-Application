@@ -3,10 +3,7 @@ package com.example.ia_fxgui;
 
 import com.example.ia_fxgui.db.DBManager;
 import com.example.ia_fxgui.db.models.Dataset;
-import com.example.ia_fxgui.services.CSVFileParser;
-import com.example.ia_fxgui.services.DatasetStorage;
-import com.example.ia_fxgui.services.Grapher;
-import com.example.ia_fxgui.services.StatFunctions;
+import com.example.ia_fxgui.services.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.ia_fxgui.SceneController.showWindowFromFxml;
@@ -105,7 +103,7 @@ public class EvaluationMenuController {
         producePDF.setOnAction(event -> saveAsPDF());
         //polynomialChoiceBox.getItems().addAll(polynomialChoiceBoxOptions);
         //polynomialChoiceBox.setOnAction(this::getPolynomialDegree);
-        filenameDisplay.setText(DatasetStorage.getDataset().getName());
+        filenameDisplay.setText(DatasetStorage.getDataset().getName()+" "+ LocalDate.now());
 
         statPearson.setOnAction(event -> handleStatPearson());
         statKendall.setOnAction(event -> handleStatKendall());
@@ -198,6 +196,39 @@ public class EvaluationMenuController {
         populateTable(StatFunctions.createResultArray(DatasetStorage.getDataset().getName()));
     }
 
+    private void saveAsPDF() {
+        System.out.println("Save as PDF button clicked.");
+
+        if(resultLineChart.getTitle()!=null){
+
+
+            Stage stage = new Stage();
+
+            String selectedDirectory = PDFCreator.openDirectoryChooser(stage);
+            if (selectedDirectory != null) {
+                System.out.println("Selected Destination: " + selectedDirectory);
+                // Here you can perform actions with the selected directory path
+            }
+            else{
+                Main.WarningPopup.openPopup("No Destination Chosen");
+            }
+
+
+
+            Grapher.saveChartAsImage(resultLineChart,DatasetStorage.getDataset().getName());
+            System.out.println(DatasetStorage.getDataset().getName());
+
+        }
+        else{
+            System.out.println("Cannot generate Empty PDF");
+            Main.WarningPopup.openPopup("Cannot generate Empty PDF");
+        }
+
+        //if linechart name is non null save result
+
+        // Add logic to save data as PDF
+    }
+
     private void saveDataSet() {
         System.out.println("Save Data Set button clicked.");
         DBManager.getInstance().getDatasetService().saveDataset(
@@ -217,36 +248,7 @@ public class EvaluationMenuController {
         // Add logic to exit to main menu
     }
 
-    private void showLargerChart() {
-        System.out.println("Show Larger Chart button clicked.");
-        // Add logic to show a larger chart
 
-        try {
-            System.out.println("Show Larger Chart");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("largerChart.fxml"));
-            Parent root = loader.load();
-
-
-            String bestFit = StatFunctions.fitPolynomial(selectedPolynomialValue, DatasetStorage.getDataset().getPointsArray());
-            String model;
-            if (modelInput.toString() != null && !modelInput.toString().isEmpty()) {
-                model = modelInput.toString();
-            } else {
-                model = null;
-            }
-
-            Grapher.displayDataSet(resultLineChart, DatasetStorage.getDataset().getPointsArray(), "x", "y", model, DatasetStorage.getDataset().getName());
-
-            LineChartController controller = loader.getController();
-            controller.setLineChart(resultLineChart);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static class LineChartController {
         @FXML
@@ -265,11 +267,7 @@ public class EvaluationMenuController {
         new DesmosController().launchDesmos(CSVFileParser.parsedDataSet);
     }
 
-    private void saveAsPDF() {
-        System.out.println("Save as PDF button clicked.");
 
-        // Add logic to save data as PDF
-    }
 
     public void populateTable(List<StatFunctions.StatFunctionRow> data) {
         resultStatArrayTable.getItems().clear(); // Clear existing items

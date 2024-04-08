@@ -118,6 +118,7 @@ public class Grapher {
     public static void saveChartAsImage(LineChart<Number, Number> chart, String fileName) {
         try {
             fileName = fileName.replace(".csv", "");
+            fileName = fileName+".png";
             // Convert the chart to a buffered image
             javafx.scene.image.WritableImage image = chart.snapshot(null, null);
             java.awt.image.BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);

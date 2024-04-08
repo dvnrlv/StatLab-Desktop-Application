@@ -2,6 +2,7 @@ package com.example.ia_fxgui.services;
 
 import com.example.ia_fxgui.Main;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -18,7 +19,12 @@ public class EquationReader {
             if (token.isEmpty()) continue;
             char c = token.charAt(0);
             if (Character.isDigit(c)) {
-                stack.push(Double.parseDouble(token));
+                try{
+                stack.push(Double.parseDouble(token));}
+                catch(Exception e){
+                    Main.WarningPopup.openPopup("Spaces between expression parts needed");
+                    e.printStackTrace();
+                }
             } else if (c == 'x') {
                 stack.push(xValue);
             } else if (isOperator(c)) {

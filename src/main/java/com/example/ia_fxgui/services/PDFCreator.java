@@ -15,10 +15,99 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
 import com.itextpdf.text.Image;
-
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 
 public class PDFCreator {
+
+
+    static void createPDF( String chartImagePath, String pdfDest){
+
+        String fileName = "Chart PDF";
+        String fileDate = LocalDate.now().toString();
+
+        Document document = new Document();
+        try
+        {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfDest));
+            document.open();
+
+            document.addAuthor(DBManager.getInstance().getAuthService().getLoggedUserName());
+            Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+            document.add(new Paragraph("Laboratory Report:"+fileName + ", " + fileDate));
+
+
+
+            //ImageData data = ImageDataFactory.create(chartImagePath);
+            //Image image = new Image(data);
+
+            Image image = Image.getInstance(chartImagePath);
+            // Set formatting properties
+
+            // Add the image to the document
+            image.scaleToFit(100f, 200f);
+
+            document.add(image);
+
+            document.close();
+            writer.close();
+
+
+            try {
+                // Get the file object representing the resource
+                File resourceFile = new File(chartImagePath);
+
+                // Delete the image
+                if (resourceFile.exists()) {
+                    boolean deleted = resourceFile.delete();
+                    if (deleted) {
+                        System.out.println("File deleted successfully.");
+                    } else {
+                        System.out.println("Failed to delete the file.");
+                    }
+                } else {
+                    System.out.println("File does not exist.");
+                    Main.WarningPopup.openPopup("Saved File does not exist.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+        } catch (DocumentException e)
+        {
+            e.printStackTrace();
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    // Method to open directory chooser dialog and return the path to the selected directory
+    public static String openDirectoryChooser(Stage Stage) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Destination Directory");
+        File selectedDirectory = directoryChooser.showDialog(Stage);
+        if (selectedDirectory != null) {
+            System.out.println(selectedDirectory.getAbsolutePath());
+            return selectedDirectory.getAbsolutePath();
+
+        }
+        return null;
+    }    // Method to open directory chooser dialog and return the path to the selected directory
+
+
+
+
+
 
     static void createPDF(Object[][] resultStatArray, String chartImagePath, String pdfDest){
 
