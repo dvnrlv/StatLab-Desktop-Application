@@ -23,20 +23,20 @@ import javafx.stage.Stage;
 public class PDFCreator {
 
 
-    static void createPDF( String chartImagePath, String pdfDest){
+    public static void createPDF(String chartImagePath, String pdfDest){
 
-        String fileName = "Chart PDF";
+        String fileName = DatasetStorage.getDataset().getName().replace(".csv", "");
         String fileDate = LocalDate.now().toString();
-
+    System.out.println(pdfDest);
         Document document = new Document();
         try
         {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfDest));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfDest+"/"+fileName+".pdf"));
             document.open();
 
             document.addAuthor(DBManager.getInstance().getAuthService().getLoggedUserName());
             Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-            document.add(new Paragraph("Laboratory Report:"+fileName + ", " + fileDate));
+            document.add(new Paragraph("Laboratory Report: "+fileName + ", " + fileDate));
 
 
 
@@ -44,10 +44,15 @@ public class PDFCreator {
             //Image image = new Image(data);
 
             Image image = Image.getInstance(chartImagePath);
+
+            // Calculate the width percentage needed to fit the image horizontally
+            float widthPercentage = PageSize.A4.getWidth() / image.getWidth() * 80;
+
+// Scale the image to fit horizontally
+            image.scaleToFit(PageSize.A4.getWidth(), image.getHeight() * widthPercentage / 100);
             // Set formatting properties
 
             // Add the image to the document
-            image.scaleToFit(100f, 200f);
 
             document.add(image);
 

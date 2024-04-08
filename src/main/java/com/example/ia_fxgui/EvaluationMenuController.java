@@ -210,13 +210,16 @@ public class EvaluationMenuController {
                 // Here you can perform actions with the selected directory path
             }
             else{
-                Main.WarningPopup.openPopup("No Destination Chosen");
+                Main.WarningPopup.openPopup("No File Destination Chosen");
             }
 
-
+            String fileName = DatasetStorage.getDataset().getName().replace(".csv", "");
+            fileName = fileName+".png";
+            fileName = "src/main/resources/" + fileName;
+            System.out.println(fileName);
 
             Grapher.saveChartAsImage(resultLineChart,DatasetStorage.getDataset().getName());
-            System.out.println(DatasetStorage.getDataset().getName());
+            PDFCreator.createPDF(fileName, selectedDirectory);
 
         }
         else{
