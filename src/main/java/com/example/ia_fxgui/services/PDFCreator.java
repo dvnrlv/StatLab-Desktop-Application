@@ -48,7 +48,7 @@ public class PDFCreator {
             // Calculate the width percentage needed to fit the image horizontally
             float widthPercentage = PageSize.A4.getWidth() / image.getWidth() * 80;
 
-// Scale the image to fit horizontally
+            // Scale the image to fit horizontally
             image.scaleToFit(PageSize.A4.getWidth(), image.getHeight() * widthPercentage / 100);
             // Set formatting properties
 

@@ -7,12 +7,6 @@
     -fx-stroke-width: 2px; /* Customize line width for series1 */
 }
 
-
-
-
-
-
-
 #bestFitSeries > .chart-line-symbol {
     -fx-background-color: transparent; /* Hide points for series1 */
 }
