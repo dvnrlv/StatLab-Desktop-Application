@@ -6,3 +6,5 @@ which includes a Desmos Graphing Calculator API, an API for the user to automati
 generate and save PDF files with the plotted charts and calculated statistical values, as well as
 a Lab Data Base portal to interact with a connected to a database and log / edit of all the
 user-uploaded experimental data sets for convenience.
+
+SEE "Product and Design Overview.PDF" for more info.
